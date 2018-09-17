@@ -5,7 +5,8 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/common1.css" />
+		<link href="../css/mui.min.css" rel="stylesheet" />	
 		<script src="../js/jquery-2.1.0.js"></script>
 		<style>
 			.mui-slider-indicator{
@@ -104,6 +105,7 @@
 		</script>
 		<script type="text/javascript" src="../js/mui.js" ></script>
 		<script type="text/javascript" src="../js/json.js" ></script>
+		<script type="text/javascript" src="../js/alertPopShow.js" ></script>
 		<script>
 			var ip = getIP();
 			$(function(){
@@ -206,7 +208,7 @@
 			//var li = '<div id="drafting"><li class="mui-table-view-cell" id="">[pillDesc]<span class="mui-badge mui-badge-primary">[dose]</span></li></div>';
 			var li =  '<div id="drafting"><li class="mui-table-view-cell" style="list-style-type:none;">'
 			+	'	<div class="mui-slider-left mui-disabled">'
-			+	'		<a class="mui-btn mui-btn-blue" id="[pillId]">编辑</a>'
+			+	'		<a class="mui-btn mui-btn-blue" id="[pillId]" onclick="editPill(this.id);">编辑</a>'
 			+	'	</div>'
 			+	'	<div class="mui-slider-right mui-disabled">'
 			+	'		<a  id="[pillId]" class="mui-btn mui-btn-red" id="delBill" onclick="deleteBill(this.id);">删除</a>'
@@ -271,6 +273,55 @@
 			});
 			
 		}
+		/**
+		 * 编辑
+		 */
+   //$('#editPill').on('click', function(){
+   	function editPill(pillId){
+   		var dose = $('#'+pillId).parent().siblings(".mui-slider-handle").children("#dose").text();
+		var html = "<label>剂量：<input class='confirm_input' placeholder=dose></label>";
+		popTipShow.confirm('弹窗标题',html,['确 定','取 消'],
+			function(e){
+			  //callback 处理按钮事件
+			  var button = $(e.target).attr('class');
+			  if(button == 'ok'){
+				if(null==$(".confirm_input").val() || ""==$(".confirm_input").val()){
+					webToast("不能为空！","bottom", 3000);
+					return;
+				}	
+				
+				this.hide();
+				setTimeout(function() {
+					//webToast($(".confirm_input").val(),"bottom", 3000);
+					var boxId = $('#boxId').val();
+					var params = {
+						boxId:boxId,
+						pillId:pillId,
+						dose:$(".confirm_input").val()
+					};
+					var url = ip+"medicine/saveEditPill.do";
+					$.post(url,params,function(res){
+						if(res.state==1){
+							
+						}
+					});
+				}, 300);
+				
+				//按下确定按钮执行的操作
+				//todo ....								
+			  }
+
+			  if(button == 'cancel') {
+				//按下取消按钮执行的操作
+				//todo ....
+				this.hide();
+				setTimeout(function() {
+					webToast("您选择“取消”了","top", 2000);
+				}, 300);
+			  }
+			}
+		);
+   }
 /*	//监听左滑动
 		mui(document).on('swipeleft','.mui-slider-item',function(e){
 			 console.log("你正在向左滑动");
