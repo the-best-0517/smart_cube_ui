@@ -41,6 +41,10 @@
 			/*table td:active{
 				background-color:yellow;
 			}*/
+			#dose{
+				float: right;
+    			color: #0aea0a;
+			}
 		</style>
 		<script>
 			/*$(document).ready(function(){  
@@ -108,7 +112,19 @@
 //				var Y = $('#DivID').offset().left; 
 //				console.log("Y:"+Y);
 				showMdicineBox();
+				showBillRecord();
 			});
+			/**
+			 * 加载个人药品记录
+			 */
+			function showBillRecord(){
+				var url = ip+"medicine/showBillRecord.do";
+				$.get(url,function(res){
+					if(res.state==1){
+						addPillRecord(res.data);
+					}
+				});
+			}
 			/**
 			 * 加载药盒数据
 			 */
@@ -187,7 +203,19 @@
 			});
 		}
 		function addPillRecord(data){
-			var li = '<div id="drafting"><li class="mui-table-view-cell" id="">[pillDesc]<span class="mui-badge mui-badge-primary">[dose]</span></li></div>';
+			//var li = '<div id="drafting"><li class="mui-table-view-cell" id="">[pillDesc]<span class="mui-badge mui-badge-primary">[dose]</span></li></div>';
+			var li =  '<div id="drafting"><li class="mui-table-view-cell" style="list-style-type:none;">'
+			+	'	<div class="mui-slider-left mui-disabled">'
+			+	'		<a class="mui-btn mui-btn-blue">编辑</a>'
+			+	'	</div>'
+			+	'	<div class="mui-slider-right mui-disabled">'
+			+	'		<a class="mui-btn mui-btn-red">删除</a>'
+			+	'	</div>'
+			+	'	<div class="mui-slider-handle">'
+			+	'		[pillDesc]'
+			+   '<span id="dose">[dose]</span>'
+			+	'	</div>'
+			+	'</li></div>';
 			$('#addMedicine').empty();
 			for(var i=0;i<data.length;i++){
 					var l = li.replace("[pillDesc]",data[i].pillDesc)
@@ -199,7 +227,6 @@
 		 * 监听拖动
 		 */
 		mui(document).on('dragend','#drafting',function(e){
-			debugger
 			var pillDesc = e.target.innerText;
 			console.log("x:"+e.detail.center.x);
 			console.log("y:"+e.detail.center.y);
@@ -246,6 +273,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" onclick="window.history.go(-1);"></a>
 			<h1 class="mui-title">我的药盒</h1>
+			<span><button onclick="showBillRecord();">全部记录</button></span>
 		</header>
 		<h1> 11</h1>
    <div id="Gallery" class="mui-slider" style="margin-top:15px;">
@@ -275,7 +303,17 @@
 				</div>
 			</div>
 			<div id="addMedicine">
-				
+				<li class="mui-table-view-cell" style="list-style-type:none;">
+					<div class="mui-slider-left mui-disabled">
+						<a class="mui-btn mui-btn-blue">编辑</a>
+					</div>
+					<div class="mui-slider-right mui-disabled">
+						<a class="mui-btn mui-btn-red">删除</a>
+					</div>
+					<div class="mui-slider-handle">
+						yao
+					</div>
+				</li>
 			</div>
 			<input type="hidden" id="boxId" value=""/>
 	</body>
