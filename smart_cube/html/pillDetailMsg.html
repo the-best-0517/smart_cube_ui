@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<!--App自定义的css-->
+		<!-- <link rel="stylesheet" type="text/css" href="../css/app.css" /> -->
+		<style>
+			h5 {
+				margin: 5px 7px;
+			}
+		</style>
+			<style type="text/css">
+		  *{
+		  /*	margin: 0;*/
+		  	padding: 0;
+		  }
+		  body{
+		  	font: 15px "微软雅黑";
+		  	color: darkslategrey;
+		  }
+		  #score{
+		  	width: 90%;
+		  	border: 3px  solid #CCC;
+		  	height: 50px;
+		  	margin: 10px auto;
+		  	position: relative;
+		  }
+		  #score>span{
+		  	display: inline-block;
+		  	width:150px;
+		  	height: 50px;
+		  	
+		  	line-height: 50px;
+		  	text-align: center;
+		  }
+		  #score ul{
+		  	width: 270px;
+		  	position: absolute;
+		  	top: 0px;
+		  	left: 160px;
+		  }
+		  #score ul.clearfix:after{
+		  	content: '';
+		  	display: table;
+		  	clear: both;
+		  	
+		  }
+		  #score  ul li{
+		  	float: left;
+		  	list-style: none;
+		  	cursor: pointer;
+		  	width: 23px;
+		  	height: 23px;
+		  	background:url(../img/xingxing1.png);
+		  }
+		  #score p{
+		  	float:right;
+		  	width:180px;
+		  	height: 50px;
+		  	line-height: 50px;
+		  	
+		  	text-align: center;
+		  }
+		  #tip{
+		  	position: absolute;
+		  	background: #94e24f;
+		  	border: 1px solid #FFA07A;
+		  	width: 180px;
+		  	height: 50px;
+		  	left:160px;
+		  	top: 70px;
+		  	line-height: 50px;
+		  	text-align: center;
+		  	border-radius: 3px;
+		  	display: none;
+		  }
+		  #tip .triangle{
+		  	width:0px;
+            height:0px;
+    		border-width:14px;
+    		border-style:solid;
+    		border-color:transparent transparent #94e24f transparent;
+    		position: absolute;
+    		left: 10px;
+    		top: -28px;
+    		z-index: 1;
+          }
+          #tip .triangle_outer{
+          	width:0px;
+            height:0px;
+    		border-width:14px;
+    		border-style:solid;
+    		border-color:transparent transparent #FFA07A transparent;
+    		position: absolute;
+    		left: 10px;
+    		top: -29px;
+          }
+		  strong{
+		  	color: crimson;
+		  	margin: 2px;
+		  }
+		  #score li.current{
+		  	background: url(../img/xingxing2.png);
+		  }
+		  #alePost{
+		  	width: 91%;
+		  	    position: fixed;
+   				 top: 22%;
+    			left: 5%;
+    			background-color: #f7f7f7;
+		  }
+	</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">药品详情</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-content-padded" style="margin: 5px;">		
+				<form class="mui-input-group">
+					<div class="mui-input-row">
+						<input type="text" disabled="disabled" id="pillDesc">
+					</div>
+				</form>
+				<div id="pillImgDesc">
+					<img src="images/muwu.jpg" style="width: 100%;" id="pillImg"/>
+				</div>
+				<div class="mui-input-row" style="margin: 10px 5px;">
+					<textarea id="pillInstruction" rows="5" placeholder="" disabled="disabled"></textarea>
+				</div>
+			</div>
+			<div id="allpost">
+				<div class="mui-card" >
+				<div class="mui-card-header mui-card-media">
+					<div class="mui-media-body">						
+						<p id="time">8-23 15:30</p>
+						<p id="userName">李四</p>
+					</div>
+				</div>
+				<div class="mui-card-content" >
+					<div style="font-size: large;">
+					 	<p id="post">好</p>
+					</div>				
+				</div>
+			</div>
+			</div>
+		</div>
+		 <button type="button" onclick="openWindow()">写评价</button>
+		  <button type="button" onclick="readText()">读说明</button>
+		 <div style="display: none;" id="alePost">
+	    <div id="score">
+	    	<span>服药感受</span>
+	    	<ul class="clearfix">
+	    		<li></li>
+	    		<li></li>
+	    		<li></li>
+	    		<li></li>
+	    		<li></li>
+	    	</ul>
+	    	<p><strong></strong></p>
+	    </div>
+	    <div id="score">
+	    	<span>服药感受</span>
+	    	<ul class="clearfix">
+	    		<li></li>
+	    		<li></li>
+	    		<li></li>
+	    		<li></li>
+	    		<li></li>
+	    	</ul>
+	    	<p><strong></strong></p>
+	    </div>
+	    <div id="score">
+	    	<span>服药感受</span>
+	    	<ul class="clearfix">
+	    		<li></li>
+	    		<li></li>
+	    		<li></li>
+	    		<li></li>
+	    		<li></li>
+	    	</ul>
+	    	<p><strong></strong></p>
+	    </div>
+	    <div id="score">
+	    	<span>服药感受</span>
+	    	<ul class="clearfix">
+	    		<li></li>
+	    		<li></li>
+	    		<li></li>
+	    		<li></li>
+	    		<li></li>
+	    	</ul>
+	    	<p><strong></strong></p>
+	    </div>
+	    </div>
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-2.1.0.js" ></script>
+		<script type="text/javascript" src="../js/json.js" ></script>
+		<script>
+			var ip;
+			$(function(){
+				ip = getIP();
+			showDetailMsg();		
+		});
+		/**
+		 * 读说明书
+		 */
+		function readText(){
+			var contents = $('#pillInstruction').val();
+			speak(contents);
+		}
+		/**
+		 * 语音播报
+		 * @param {Object} contents
+		 */
+	function speak(contents){
+	 var speaktext=contents;//传入的值是需要播报的内容
+	 switch(plus.os.name){
+	      	case "iOS":
+		      	var AVSpeechSynthesizer=plus.ios.importClass("AVSpeechSynthesizer");
+			var AVSpeechUtterance=plus.ios.importClass("AVSpeechUtterance");
+			var AVSpeechSynthesisVoice=plus.ios.import("AVSpeechSynthesisVoice");
+			var sppech = new AVSpeechSynthesizer();
+			var voice = AVSpeechSynthesisVoice.voiceWithLanguage("zh-CN");
+			var utterance =  AVSpeechUtterance.speechUtteranceWithString(speaktext);
+			utterance.setVoice(voice);
+			sppech.speakUtterance(utterance);
+			plus.ios.deleteObject(voice);
+			plus.ios.deleteObject(utterance);
+			plus.ios.deleteObject(sppech);
+	      		break;
+	      	case "Android":
+		      	var main=plus.android.runtimeMainActivity();
+			var SpeechUtility=plus.android.importClass("com.iflytek.cloud.SpeechUtility");
+			SpeechUtility.createUtility(main,"appid=5a20bab9");
+			var SynthesizerPlayer=plus.android.importClass("com.iflytek.cloud.SpeechSynthesizer");
+			var play=SynthesizerPlayer.createSynthesizer(main,null);
+			play.startSpeaking(speaktext,null);
+	      	break;
+	 }	      		
+}
+		/**
+		 * 写评价弹窗
+		 */
+	function openWindow() {
+     alert("chanbian style")
+     $('#alePost').css('display','block');
+    }
+		/**
+		 * 加载评论
+		 */
+		function showPost(){			
+			var pillId = oneValues();
+			var url = ip+"pill/showPost.do";
+			var params = {
+				pillId:pillId
+			};
+			$.post(url,params,function(res){
+					addPost(res.data);
+				
+			})
+		}
+		/**
+		 * 添加评论到页面
+		 */
+		function addPost(data){	
+			var div = '<div class="mui-card" >'
+						+'<div class="mui-card-header mui-card-media">'
+						+'<div class="mui-media-body">	'					
+						+'<p id="time">[createTime]</p>'
+						+'<p id="userName">[userName]</p>'
+						+'</div>'
+						+'</div>'
+						+'<div class="mui-card-content" >'
+						+'<div style="font-size: large;">'
+					 	+'<p id="post">[post]</p>'
+						+'</div>	'			
+						+'</div>'
+						+'</div>';
+						$('#allpost').empty();
+						for(var i=0;i<data.length;i++){
+							var time = data[i].createTime;
+							var transTime = new Date( time );
+							var d = div.replace("[createTime]",transTime.toLocaleDateString()+' '+transTime.toTimeString().substring(0,8))
+									 .replace("[userName]",data[i].userName)
+									 .replace("[post]",data[i].post);
+							$('#allpost').append(d);		 
+						}
+						
+		}
+		/**
+		 * 点击每个药品时，显示药品信息
+		 */
+		function showDetailMsg(){
+			var pillId = oneValues();
+			var url = ip+"remiand/findPillMsgByPillId.do";
+			var params = {
+				pillId:pillId
+			};
+			$.post(url,params,function(res){
+				
+				if(res.state==1){
+					//回填
+					$('#pillDesc').val(res.data[0].pillDesc);
+					$('#pillInstruction').val(res.data[0].pillInstruction);
+					$('#pillImg').attr("src","http://120.79.10.49:8080/smart_cube/"+res.data[0].pillImg);
+					showPost();
+				}
+			});
+		}
+		 //接收一个值
+		function oneValues(){
+				var result;
+				var url=window.location.search; //获取url中"?"符后的字串  
+				if(url.indexOf("?")!=-1){
+				result = url.substr(url.indexOf("=")+1);
+				}
+				return result;
+		}
+		</script>
+		
+		   <script type="text/javascript">
+	         	  var oScore = document.getElementById("score");
+	         	  var oTip   = document.getElementById("tip");
+	         	  var oLi    =   oScore.getElementsByTagName('li');
+	         	  var oStrong=   oScore.getElementsByTagName('strong');
+	         	  var oSpan  =   oScore.getElementsByTagName('span')[0];
+	         	  var iScore = iPoint = 0;
+	         //	  var msg=['1星  非常糟糕','2星  糟糕','3星  一般','4星  商品良好','5星  非常棒'];
+	         	//  var review=['1星满意度,请联系我们','2星满意度,请联系我们','3星满意度,还不满意？？','4星满意度,会再接再厉','5星满意度,会继续努力哒'];
+	         	  for(var i=0;i<oLi.length;i++){
+	         	  	  oLi[i].index=i;
+	         	  	  oLi[i].onmouseover = function(){
+	         	  	  	 iScore = this.index+1;             //记录下索引值
+	         	  	  	 fnPoint(iScore);                   //鼠标移过显示评分
+	         	  	  //	 oTip.style.display='block';        //让提示框显示在对应的位置
+	         	  	 // 	 oTip.style.left = 160+this.index*48+'px';
+	         	  	  //	 oStrong[1].innerHTML = msg[this.index];  //移过不同的星星显示对应的文字
+	         	  	  	 console.log(this.index)
+	         	  	  }
+	         	  	  oLi[i].onclick = function(){
+	         	  	  	//   oStrong[0].innerHTML = review[this.index]; //右上角评价结果显示
+	         	  	  	   iPoint = this.index+1;       //鼠标点击事件，记录下索引，并返回索引值
+	         	  	  	   return iPoint;
+	         	  	  	   
+	         	  	  }
+	         	  	  oLi[i].onmouseout = function(){  //接收点击的索引，鼠标移出后，恢复上次的评分
+	         	  	  	 fnPoint(iPoint);
+	         	  	  //	 oTip.style.display='none';     //鼠标移出隐藏提示框
+	         	  	  }
+	         	  	  
+	         	  }
+	         	  function fnPoint(arg){                
+	         	  	  iScore = arg? arg:iScore;        //接收一个参数，如果没传进参数就用iScore
+	         	  	  for(var i=0;i<oLi.length;i++){   //遍历oLi,对点击的和之前的都亮起来，之后的不亮
+	         	  	  	 oLi[i].className = i<iScore? 'current':'';  
+	         	  	  }
+	         	  }
+	         </script>
+	</body>
+
+</html>

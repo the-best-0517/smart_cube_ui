@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+			
+		<title>Find</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">	
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<!--App自定义的css-->
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		<style>
+			
+			 
+			/*************--------------------*/
+			.title{
+				margin: 20px 15px 10px;
+				color: #6d6d72;
+				font-size: 15px;
+			}
+			
+			.oa-contact-cell.mui-table .mui-table-cell {
+				padding: 11px 0;
+				vertical-align: middle;
+			}
+			
+			.oa-contact-cell {
+				position: relative;
+				margin: -11px 0;
+			}
+	
+			.oa-contact-avatar {
+				width: 75px;
+			}
+			.oa-contact-avatar img {
+				border-radius: 50%;
+			}
+			.oa-contact-content {
+				width: 100%;
+			}
+			.oa-contact-name {
+				margin-right: 20px;
+			}
+			.oa-contact-name, oa-contact-position {
+				float: left;
+			}
+			#tabbar-with-find{
+				height: auto;
+			}
+			
+		
+		</style>
+		
+	</head>
+
+	<body>
+		<!--<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">底部选项卡-div模式</h1>
+		</header>-->
+		<nav class="mui-bar mui-bar-tab" id="footer">
+		
+			<div id="footer0">
+			<a class="mui-tab-item mui-active" href="#tabbar-with-find">
+				<span class="mui-icon mui-icon-arrowup"></span>
+				<span class="mui-tab-label">首页</span>
+			</a>
+			<a class="mui-tab-item" href="#tabbar-with-chat" id="pill">
+				<span class="mui-icon mui-icon-email"><span class="mui-badge">100</span></span>
+				<span class="mui-tab-label">药品查询</span>
+			</a>
+			
+		<!--	<a class="mui-tab-item" href="">
+			
+				<span class="mui-tab-label" id="turnPost" onclick='window.open("html/post.html");'>+</span>
+			</a>-->
+		<!--	<button id="headImage">aniu</button>-->
+			
+			<a class="mui-tab-item" href="#tabbar-with-contact" id="findMap">
+				<span class="mui-icon mui-icon-contact"></span>
+				<span class="mui-tab-label">发现</span>
+			</a>
+			<a class="mui-tab-item" href="#tabbar-with-map">
+				<span class="mui-icon mui-icon-gear"></span>
+				<span class="mui-tab-label">个人中心</span>
+			</a>
+			</div>
+		</nav>
+	
+			<div id="tabbar-with-find" class="mui-control-content mui-active" >
+				<object style="border:0px" type="text/x-scriptlet" data="firstPage.html" width=100% height=619px></object>
+			</div>
+		
+		 
+			<div id="tabbar-with-chat" class="mui-control-content">
+				<header class="mui-bar mui-bar-nav">
+			
+			<h1 class="mui-title">药品查询</h1>
+		</header>
+		<div>
+			<h5>1</h5>
+			<h5>2</h5>
+			<h5>
+			</h5>
+			<h5> </h5>
+				<div class="mui-input-row mui-search mui-plus-visible">
+					<input id="search" type="search" class="mui-input-speech mui-input-clear" placeholder="">
+				</div>
+				<div id="addPill">
+		<div id="pillSearch" onclick="window.location.href='pillDetailMsg.html'">
+			<div class="mui-card">
+				<div class="mui-card-header" id="pillDesc">感冒清热颗粒</div>
+				<div id="pillImg">
+					<img src="images/muwu.jpg"/>
+				</div>
+				<div class="mui-card-content">
+					<div class="mui-card-content-inner" id="pillInstruction">
+						药品介绍
+					</div>
+				</div>
+				<div class="mui-card-footer" id="comment">评论</div>
+			</div>			
+		</div>
+		</div>
+		
+		</div>
+		<h1>1</h1>
+			</div>
+							
+			<div id="tabbar-with-contact" class="mui-control-content">
+				
+			</div>
+			<div id="tabbar-with-map" class="mui-control-content">
+				<object style="border:0px" type="text/x-scriptlet" data="me.html" width=100% height=619px></object>
+			</div>
+			
+		
+	</div>
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/jquery-2.1.0.js"></script>
+	<script type="text/javascript" src="../js/json.js" ></script>
+	<script>
+mui.init({
+  gestureConfig:{
+   tap: true, //默认为true
+   doubletap: true, //默认为false
+   longtap: true, //默认为false
+   swipe: true, //默认为true
+   drag: true, //默认为true
+   hold:false,//默认为false，不监听
+   release:false//默认为false，不监听
+  }
+});
+	</script> 
+	<script>
+			mui.init();
+			var ip = getIP();
+			mui.plusReady(function () {
+				//showAllPill();
+				//debugger
+				//alert("555")
+//				var view = plus.nativeObj.View.getViewById("title");
+//				
+//				var bitmap = new plus.nativeObj.Bitmap("back");
+//				bitmap.loadBase64Data("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAb1BMVEUAAAAAev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8AAACubimgAAAAI3RSTlMAGfUTGfQTGPMSGPIYGhgaGBsXGxcbFxwXHBccFhwWHRYdHWufDPQAAAABYktHRACIBR1IAAAAB3RJTUUH4QETEBwooeTlkQAAAJVJREFUSMft1EkSgkAQRNFGUXFWHBDBibr/HTUwD5B/48Ig1y+io7u6MqUhf5hsNEY+j5hMgZ/FJ8Xc9ovos3T96utjbfqN/Nb0O/m96Uv5g+mP8ifTn+Ur01/ka9Nf5RvTt/I309/lH6Z/yr9Mn+Q71/MT8B34K/E58Enzv8R/K98HvnF8p3lr8F7izce7lbf3kJ/lDQp9HdBhgg3PAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE3LTAxLTE5VDE2OjI4OjQwKzA4OjAwpTDFwQAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxNy0wMS0xOVQxNjoyODo0MCswODowMNRtfX0AAAAASUVORK5CYII=");
+//				view.drawBitmap(bitmap, {}, {
+//					top: "10px",
+//					left: "10px",
+//					width: "24px",
+//					height: "24px"
+//				});
+//				
+//				view.setTouchEventRect({top:"0px",left:"0px",width:"44px",height:"100%"});
+			//连接蓝牙
+			linkBuleTooth();
+			});
+			
+//			document.getElementsByClassName('mui-card').addEventListener("swipeup",function(){
+//			     console.log("你正在向上滑动");
+//			     $("#footer").css('display','none');
+//			});
+			mui('#pillSearch').scroll();
+			mui('body').on('shown', '.mui-popover', function(e) {
+				//console.log('shown', e.detail.id);//detail为当前popover元素
+			});
+			mui('body').on('hidden', '.mui-popover', function(e) {
+				//console.log('hidden', e.detail.id);//detail为当前popover元素
+			});
+			
+			mui('.mui-bar-tab').on('tap', '#pill', function(e) {				
+				showPill();
+			});
+			mui('.mui-bar-tab').on('tap', '#findMap', function(e) {		
+				window.location.href="findMap.html";
+			});
+			/**
+			 * 加载药品
+			 */	
+			function showPill(){
+				var div = '		<div id="[pillId]" onclick="openHtml(this.id)">'
+						+	'	<div class="mui-card">'
+						+	'	<div class="mui-card-header" id="pillDesc">[pillDesc]</div>'
+						+	'		<div id="pillImg">'
+						+	'			<img src="[pillImgPath]" style="height: 65px;width: 60px;"/>'
+						+	'		</div>'
+						+	'	<div class="mui-card-content">'
+						+	'	<div class="mui-card-content-inner" id="pillInstruction">'
+						+	'	[pillInstruction]'
+						+	'	</div>'
+						+	'	</div>'
+						+	'	<div class="mui-card-footer" id="comment">评论</div>'
+						+	'	</div>	'	
+						+	'</div>';
+				
+				var key = $('#search').val();
+				ip = getIP();
+				
+				var url = ip+"pill/showAllPill.do";
+				var params = {
+					key:key
+				};
+				$.post(url,params,function(res){
+					if(res.state==1){
+						//添加药品信息
+						$('#addPill').empty();
+						for(var i=0;i<res.data.length;i++){
+							console.log(res.data)
+							var d = div.replace("[pillId]",res.data[i].pillId)
+								.replace("[pillDesc]",res.data[i].pillDesc)
+								.replace("[pillInstruction]",res.data[i].pillInstruction)
+								.replace("[pillImgPath]","http://120.79.10.49:8080/smart_cube/"+res.data[i].pillImgPath);
+								$('#addPill').append(d);
+						}
+					}
+				});
+			}
+			/**
+			 * 打开新页面
+			 */
+			function openHtml(pillId){
+				console.log("pillId:"+pillId);
+				window.location.href='pillDetailMsg.html?pillId='+pillId;
+			}
+			
+			/**
+			 * 搜索框查询
+			 */
+			$('#search').change(function(){
+				showPill();
+			});
+			
+						/**
+			**查询蓝牙代码
+			*/
+			function linkBuleTooth(){
+				var url = ip+"login/linkBuleTooth.do";
+				$.get(url,function(res){
+					if(res.state==1){
+					//alert("55")
+					clientEquipment('50:65:83:94:25:CA');
+					//clientEquipment(res.data[0].buleMac);
+					}
+				});
+			}
+		</script>
+		
+</html>

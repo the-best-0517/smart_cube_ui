@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style>
+			#add{
+			    height: 35px;
+			    width: 35px;
+			    position: absolute;
+			    left: 176px;
+			    top: -6px;
+			}
+			#back{
+				height: 30px;
+				width: 30px;
+				position: absolute;
+				left:5px;
+				top: 5px;
+			}
+			header{
+				height: 45px;
+				text-align: center;
+				
+			}
+			header span{
+				position: absolute;
+				top: 10px;
+				left: 150px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+	  <header class="mui-bar mui-bar-nav">
+	   <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	   <h1 class="mui-title">家属管理</h1>
+	   <span ><img src="images/Add.png" id="add" onclick="window.location.href='relationAdd.html'"></span>
+  	  </header> 
+  	  <input />
+  	  <h5>1</h5>
+		<ul class="mui-table-view mui-table-view-chevron" id="addLinkMan">
+				<li class="mui-table-view-cell mui-media" onclick="showRemind(this);">
+					<a class="mui-navigate-right">
+						
+						<div class="mui-media-body">
+							张三
+							<p class='mui-ellipsis'>18701198791</p>
+						</div>
+					</a>
+				</li>
+			</ul>
+	</body>
+	<script type="text/javascript" src="../js/mui.js" ></script>
+<script type="text/javascript" src="../js/jquery-2.1.0.js" ></script>
+<script type="text/javascript" src="../js/json.js" ></script>
+
+<script>
+	var ip = getIP();
+	$(function(){
+		showLinkMan();
+	});
+	/**
+	 * 加载联系人
+	 */
+	function showLinkMan(){
+		var url = ip+"relation/showLinkMan.do";
+		$.get(url,function(res){
+			if(res.state==1){
+				addLinkMan(res.data);
+			}
+		});
+	}
+	/**
+	 * 添加联系人
+	 */
+	function addLinkMan(data){
+				var li = '	<li class="mui-table-view-cell mui-media" id="[linkId]" onclick="showRemind(this);">'
+						+'	<a class="mui-navigate-right">					'			
+						+'		<div class="mui-media-body">'
+						+'			[trueName]'
+						+'			<p class="mui-ellipsis">[phone]</p>'
+						+'		</div>'
+						+'	</a>'
+						+'</li>';
+				$('#addLinkMan').empty();
+				for(var i=0;i<data.length;i++){
+					var l = li.replace("[linkId]",data[i].linkId)
+							  .replace("[trueName]",data[i].trueName)
+							  .replace("[phone]",data[i].phone);
+					$('#addLinkMan').append(l);
+				}
+				
+	}
+	/**
+	 * 跳转到提醒页
+	 */
+	function showRemind(e){
+		var phone = $(e).children().children().children().html();
+		console.log(phone)
+		localStorage.setItem("phone",phone);
+		window.open("myRemind.html");
+	}
+</script>
+</html>

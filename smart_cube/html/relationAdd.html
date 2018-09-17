@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style>
+			#codeId{
+			position: relative;
+			left:53px;
+			top:-41px;
+		}
+		form{
+			position: absolute;
+			top: 50px;
+		}
+		</style>
+		
+	</head>
+	
+	<body>
+
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">家属绑定</h1>
+		</header> 
+		<form class="mui-input-group">
+	    <div class="mui-input-row">
+	        <label>用户名</label>
+	    <input type="text" class="mui-input-clear" placeholder="请输入姓名" id="userName">
+	    </div>
+	    <div class="mui-input-row">
+	        <label>手机号</label>
+	        <input type="password" class="mui-input" placeholder="请输入手机号" id="phone">
+	    </div>
+	    <div class="mui-input-row">
+	        <label>关系</label>
+	    <input type="text" class="mui-input-clear" placeholder="请输入与被绑定着关系" id="relationShip">
+	    </div>
+	    <div class="mui-input-row">
+	        <label>验证码</label>
+	        <input type="password" class="mui-input" placeholder="验证码" id="vCode">
+	       	
+
+	    </div>
+	    
+	    <div class="mui-button-row">
+	        <button type="button" class="mui-btn mui-btn-primary"  onclick="saveLinkMan();">确认</button>
+	        <button type="button" class="mui-btn mui-btn-danger" >取消</button>
+	        <button id="codeId" type="button" class="mui-btn mui-btn-green" >发送验证码</button>
+	    </div>
+</form>
+		     <script type="text/javascript" src="../js/mui.js" ></script>
+		     <script type="text/javascript" src="../js/jquery-2.1.0.js" ></script>
+		     <script type="text/javascript" src="../js/json.js" ></script>
+		     		<script type="text/javascript">
+			mui.init()
+		</script>
+		     <script>
+		     	var ip = getIP();
+		     	$(function(){
+		     		
+		     	});
+		    /**
+		     * 保存
+		     */
+		    function saveLinkMan(){
+		    	var url = ip+'relation/saveLinkMan.do';
+		    	var userName = $('#userName').val();
+		    	var phone = $('#phone').val();
+		    	var vCode = $('#vCode').val();
+		    	var relationShip = $('#relationShip').val();
+		    	var params = {
+		    		userName:userName,
+		    		phone:phone,
+		    		vCode:vCode,
+		    		relationShip:relationShip
+		    	};
+		    	$.post(url,params,function(res){
+		    		if(res.state==1){
+		    			alert("ok");
+		    			window.location.href="relationManager.html"
+		    		}else{
+		    			alert(res.message);
+		    		}
+		    	});
+		    }
+		     </script>
+		      
+	</body>
+
+</html>

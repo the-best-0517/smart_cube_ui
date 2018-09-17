@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+ <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <!--标准mui.css-->
+  <link rel="stylesheet" href="../css/mui.min.css">
+  <script type="text/javascript" src="../js/common.js" ></script>
+  <!--App自定义的css-->
+  <!-- <link rel="stylesheet" type="text/css" href="../css/app.css" /> -->
+  <style>
+   h5 {
+    margin: 5px 7px;
+   }
+   #addsel{
+    width: 115px;
+       position: absolute;
+       right: 0px;
+   }
+  </style>
+ </head>
+
+ <body>
+  <header class="mui-bar mui-bar-nav">
+   <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" onclick="changePage();"></a>
+   <h1 class="mui-title">添加病历</h1>
+   <button type="button" class="mui-btn mui-btn-primary" onclick="saveCaseMsg();" style="float: right;">保存</button>
+  </header> 
+
+   <div>
+    <div>
+     <input type="text" id="" />
+     <span>就诊日期</span>
+      <input type="date" id="visitDate"/>
+    </div>
+    
+    <div>
+     <span>就诊医院</span>
+     <input type="text" id="hospital" />
+    </div>
+     <div>
+     <span>病因</span>
+     <input type="text" id="season" />
+    </div>
+    <div>
+    <span id="add" onclick="window.open('../uploadImg.html')">添加图片<image src="images/addImg.png"/></span>
+    </div>
+    <div id="addImg">  	
+    </div> 
+    <div>
+    </div>
+   </div>
+ <script type="text/javascript" src="../js/mui.js" ></script>
+<script type="text/javascript" src="../js/jquery-2.1.0.js" ></script>
+ <script type="text/javascript" src="../js/json.js" ></script>
+ <script>
+ 	var myArray=new Array();
+ 	var ip = getIP();
+ 	mui.init();
+ 	mui.plusReady(function () {
+ 		
+ 		$('#add').click(function(){
+ 			
+ 		});
+ 		var result= oneValues();
+ 		console.log("result:"+result);
+ 		for(var i=0;i<result;i++){
+ 			var imgBase64 = localStorage.getItem("base64"+i);
+ 			myArray[i] = imgBase64; 		
+ 		}
+ 		for(var i=0;i<myArray.length;i++){
+ 			var img = '<img src='+myArray[i]+' style="height:100px;width:100px; fload:left;">';
+ 			$('#addImg').append(img);
+ 		}
+ });
+ 	    //接收一个值
+		function oneValues(){
+				var result;
+				var url=window.location.search; //获取url中"?"符后的字串  
+				if(url.indexOf("?")!=-1){
+				result = url.substr(url.indexOf("=")+1);
+				}
+				return result;
+		}
+	
+ 
+        /**
+         * 保存病例信息
+         */
+		function saveCaseMsg(){
+			var url = ip+"case/saveCaseMsg.do";
+			var visitDate = $('#visitDate').val();
+			var hospital = $('#hospital').val();
+			var season = $('#season').val();
+			var params = {
+				visitDate:visitDate,
+				hospital:hospital,
+				season:season
+			};
+			$.post(url,params,function(res){
+				if(res.state==1){
+					console.log(res.data[0]);
+					//保存图片
+					saveCaseImg(res.data[0]);
+					alert("save ok");
+				}
+			})
+		}
+    /*
+     * 保存病例图片
+     */
+    function saveCaseImg(caseId){
+    		var result= localStorage.getItem("i");
+				for(var i=0;i<result;i++){
+				var base64 = localStorage.getItem('base64'+i);
+				var url = ip+"case/saveCaseImg.do";
+				var params = {
+					caseId:caseId,
+					base64:base64
+				};
+				$.post(url,params,function(res){
+					if(res.state==1){
+					//清除本地缓存
+					var result= localStorage.getItem("i");
+					for(var i=0;i<result;i++){
+						localStorage.removeItem('base64'+i);
+					}
+					localStorage.removeItem("i");
+					window.location.href="myCase.html";
+					}
+				});
+				}
+    }
+  
+  /**
+   * 返回，清除缓存
+   */
+  function changePage(){
+  	window.location.href="myCase.html";
+  	for(var i=0;i<result;i++){
+		localStorage.removeItem('base64'+i);
+	}
+	localStorage.removeItem("i");
+  }
+  
+  
+ </script>
+ </body>
+
+</html>

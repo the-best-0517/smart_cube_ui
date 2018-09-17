@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>find</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../css/app.css" />
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			.mui-bar~.mui-content .mui-fullscreen {
+				top: 44px;
+				height: auto;
+			}
+			.mui-pull-top-tips {
+				position: absolute;
+				top: -20px;
+				left: 50%;
+				margin-left: -25px;
+				width: 40px;
+				height: 40px;
+				border-radius: 100%;
+				z-index: 1;
+			}
+			.mui-bar~.mui-pull-top-tips {
+				top: 24px;
+			}
+			.mui-pull-top-wrapper {
+				width: 42px;
+				height: 42px;
+				display: block;
+				text-align: center;
+				background-color: #efeff4;
+				border: 1px solid #ddd;
+				border-radius: 25px;
+				background-clip: padding-box;
+				box-shadow: 0 4px 10px #bbb;
+				overflow: hidden;
+			}
+			.mui-pull-top-tips.mui-transitioning {
+				-webkit-transition-duration: 200ms;
+				transition-duration: 200ms;
+			}
+			.mui-pull-top-tips .mui-pull-loading {
+				/*-webkit-backface-visibility: hidden;
+				-webkit-transition-duration: 400ms;
+				transition-duration: 400ms;*/
+				
+				margin: 0;
+			}
+			.mui-pull-top-wrapper .mui-icon,
+			.mui-pull-top-wrapper .mui-spinner {
+				margin-top: 7px;
+			}
+			.mui-pull-top-wrapper .mui-icon.mui-reverse {
+				/*-webkit-transform: rotate(180deg) translateZ(0);*/
+			}
+			.mui-pull-bottom-tips {
+				text-align: center;
+				background-color: #efeff4;
+				font-size: 15px;
+				line-height: 40px;
+				color: #777;
+			}
+			.mui-pull-top-canvas {
+				overflow: hidden;
+				background-color: #fafafa;
+				border-radius: 40px;
+				box-shadow: 0 4px 10px #bbb;
+				width: 40px;
+				height: 40px;
+				margin: 0 auto;
+			}
+			.mui-pull-top-canvas canvas {
+				width: 40px;
+			}
+			.mui-slider-indicator.mui-segmented-control {
+				background-color: #efeff4;
+			}
+			.mui-card-header.mui-card-media .mui-media-body {
+				    margin-left: 0px;
+			}
+						#scan{
+				    height: 44px;
+				    width: 44px;
+				    float: right;
+			}
+		</style>
+	</head>
+
+	<body>
+	
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" onclick="window.history.go(-1);"></a>
+			<span id="scan" onclick="changeHtml();"><img src="images/scan.png"></span>
+			<h1 class="mui-title" id="" >吃药提醒</h1>				
+		</header> 
+		<input type="text" id="hiddenBox" />
+		<div class="mui-content">
+			<div id="slider" class="mui-slider mui-fullscreen">
+				
+				<div class="mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<div id="scroll" class="mui-scroll-wrapper">
+							<div class="mui-scroll" id="moveView">
+								<!--卡片-->
+			<div class="mui-card" >
+				<div class="mui-card-header mui-card-media" >
+					<div class="mui-media-body" contenteditable="true">
+						<input type="hidden" id="pillRecordId" value="2222"/>
+						<p id="remindTime">8-23 15:30</p>
+						<p id="remindBox">1号盒</p>
+					</div>
+				</div>
+				<div class="mui-card-content" >
+					<div style="font-size: large;">
+					 	<p>感冒清热颗粒   一袋</p>
+					 	<p>头孢   一片</p>
+					</div>				
+				</div>
+				<!--长按显示-->
+				<div class="mui-card-footer" id="remaindFooter" style="display: block;">
+					<a class="mui-card-link" id="remindEdit">保存</a>
+					<a class="mui-card-link" id="remindDelete">删除</a>	
+					
+				</div>
+			</div>
+			<!------------------------------------------------------------>
+			<!--动态加入-->							
+							</div>
+						</div>
+					</div>
+			
+			</div>
+		</div>
+		</div>
+
+
+
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.pullToRefresh.js"></script>
+		<script src="../js/mui.pullToRefresh.material.js"></script>
+		<script type="text/javascript" src="../js/jquery-2.1.0.js" ></script>
+		<script type="text/javascript" src="../js/json.js" ></script>
+		<script type="text/javascript" src="../js/test.js" ></script>
+		<script type="text/javascript" src="../js/common.js" ></script>
+		<script type="text/javascript" src="../js/test-inner.js" ></script>
+		<script type="text/javascript" src="../js/BLE.js" ></script>
+		<script>
+var phone;
+var ip = getIP();
+$(function(){
+	showRemaind();
+	setbtn();
+});
+function changeHtml(){
+	localStorage.setItem("phone",phone);
+	window.open('addRemaind.html');
+}
+    //接收一个值
+		function oneValues(){
+				var result;
+				var url=window.location.search; //获取url中"?"符后的字串  
+				if(url.indexOf("?")!=-1){
+				result = url.substr(url.indexOf("=")+1);
+				}
+				return result;
+		}
+/**
+ * 保存/更新
+ */
+function updateRemindMsg(e){
+	var remindId = $(e).parent().prev().prev().children(".mui-media-body").children("#pillRecordId").val();
+	console.log("remind:"+remindId);
+	var url = ip+"remiand/saveRemindEdit.do";
+	debugger
+	var  remindEdit = $('#remindTime').text();
+	var remindBox = $('#remindBox').text();
+	var params = {
+		remindId:remindId,
+		remindEdit:remindEdit,
+		remindBox:remindBox
+	};
+	$.post(url,params,function(res){
+		if(res.state==1){
+			alert("ok");
+			showRemaind();
+		}
+	});
+}
+/*
+ * 删除
+ */
+function deleteRemindMsg(e) {
+var remindId = $(e).parent().prev().prev().children(".mui-media-body").children("#pillRecordId").val();
+	var url = ip+"remiand/deleteRemindMsg.do";
+	var params = {
+		remindId:remindId
+	};
+	$.post(url,params,function(res){
+		if(res.state==1){
+			alert("delete ok");
+			showRemaind();
+		}
+	});
+}
+var ip;
+/**加载提醒*/
+function showRemaind(){
+	debugger
+	ip = getIP();
+	phone = localStorage.getItem("phone");
+	console.log(phone);
+	localStorage.removeItem("phone");
+	//console.log(ip)
+	var url = ip+"remiand/showRemaind.do";
+	var params = {
+		phone:phone
+	};
+	$.post(url,params,function(result){
+		//console.log("res:"+result.data);
+		addView(result.data);		
+	});
+} 
+
+/**添加发帖信息到页面*/
+function addView(result){
+	var moveView = $('#moveView');
+	var div = '<div class="mui-card" >'
+			+	'<div class="mui-card-header mui-card-media">'
+			+		'<div class="mui-media-body" contenteditable="true">'
+			+			'<input type="hidden" id="pillRecordId" value="[remindId]"/>'
+			+			'<p id="remindTime">[remindTime]</p>'
+			+			'<p id="remindBox">[boxId]</p>'
+			+		'</div>'
+			+	'</div>'
+			+	'<div class="mui-card-content" >'
+			+		'<div style="font-size: large;" id="[remindId]">'
+			+		'</div>				'
+			+	'</div>'
+			+	'<div class="mui-card-footer" id="remaindFooter" style="display: block;">'
+			+	'	<a class="mui-card-link" id="remindEdit" onclick="updateRemindMsg(this);">保存</a>'
+			+	'	<a class="mui-card-link" id="remindDelete" onclick="deleteRemindMsg(this);">删除</a>'				
+			+	'</div>'
+			+'</div>';
+	moveView.empty();
+	
+	for(var i=0;i<result.length;i++){
+		var d1 = div.replace('[remindTime]',result[i].remindTime)
+					.replace('[boxId]',result[i].boxId)
+					.replace('[remindId]',result[i].remindId)
+					.replace("[remindId]",result[i].remindId);
+		moveView.append(d1);	
+		//查找此时间的药品
+		var url = ip+"remiand/addPills.do";
+		var b = result[i].remindId;
+		//console.log("b:"+b)
+		var params = {
+			remindId:result[i].remindId,
+			boxId:result[i].boxId,
+			remindTime:result[i].remindTime
+		};
+			$.ajax({
+			type:'post',
+			url:url,
+			dataType:'json',
+			data:params,
+			async:false,
+			success:function(res){	
+		//	console.log("resdata:"+res.data)			
+			var remindId = $("#"+b);
+			var resdata = res.data;
+			for(var j=0;j<resdata.length;j++){
+				var p = '<p>'+resdata[j].pillDesc+'<span>'+resdata[j].dose+'</span></p>';
+				remindId.append(p);
+			}		
+			}
+		});
+	}
+}
+			
+			
+		//轮询	
+		function pullMsg(){
+			  var url = ip+"login/pull.do";
+			  $.get(url,function(res){
+			  	if(res.state==1){
+			  	//	alert("res"+res.data[1])
+			  		$('#hiddenBox').val(res.data[1]);
+			  		var hiddenBox = $('#hiddenBox').val();
+			  		sendMessage(res.data[0]);
+			  	}else{	
+			  		var hiddenBox = $('#hiddenBox').val();
+			  		alert("hb:"+hiddenBox);
+			  		if(hiddenBox){
+			  	//	sendMessage("C00000000000000000");
+			  		var wl = receiveMessage();
+			  		alert(wl);
+			  	//	var wl = "C01110011000";
+			  	if(wl.length<2){
+			  		return;
+			  	}
+			  		var ww = wl[wl.length-1];
+			  		alert("ww:"+ww);
+			  		//N00100000002
+			  		var w = ww.split('');
+			  		alert("w:"+w);
+			  		if(w[1]=="N"){
+			  			var boxSerial = ww.substr(3);
+			  			//保存副盒
+			  			insertboxSerial(boxSerial);
+			  			return;
+			  		}
+			  		var l = parseInt(hiddenBox)+2;
+			  		alert("l:"+l)
+			  //	var l = 6;
+					  alert("w[l]:"+w[l])
+				  		if(w[l]==0){
+				  			alert("666")
+				  			var str = "O"+w[1]+w[2]+"000000000";
+				  			sendMessage(str);
+				  			//更改吃药状态
+				  			//changeIfEating(hiddenBox);
+				  			$('#hiddenBox').val("");
+				  			
+				  		}			  		
+			  		}	  		
+			  	}
+			  });
+			}
+
+		function setbtn(){
+			setTimeout('findService()',2000);
+			}
+			function findService(){
+			//alert("1")
+			discoverService();   //发现服务
+			allSearch();
+			}
+			function allSearch(){
+			//alert("2")
+				setInterval('pullMsg()',5000);
+			//	setInterval('reviveMsg()',10000);
+			}
+			/*
+			 * 改变吃药状态
+			 */
+			function changeIfEating(boxId){
+				var url = ip+"remiand/changeIfEating.do";
+				var params = {
+					boxId,boxId
+				};
+				$.post(url,params,function(res){
+					if(res.state==1){
+						
+					}
+				});
+			}
+			/*
+			 * 保存副盒信息
+			 */
+			function insertboxSerial(boxSerial){
+				var url = ip+"remiand/insertboxSerial.do";
+				var params = {
+					boxSerial:boxSerial
+				};
+				$.post(url,params,function(res){
+					if(res.state==1){
+						
+					}
+				});
+			}
+			/**
+			 * 切换到后台监听
+			 */
+//		document.addEventListener("pause", function () {
+//  console.log("应用从前台切换到后台");
+// setInterval('pullMsg()',5000);
+//  mui.toast('程序在后台运行');
+//}, false);
+			
+		</script>
+		<script>
+			mui.init();
+		(function($){
+    $(".mui-scroll-wrapper").scroll({
+        //bounce: false,//滚动条是否有弹力默认是true
+        //indicators: false, //是否显示滚动条,默认是true
+    }); 
+})(mui);
+		var timeOutEvent=0;//定时器   
+//开始按   
+function gtouchstart(){   
+    timeOutEvent = setTimeout("longPress()",500);//这里设置定时器，定义长按500毫秒触发长按事件，时间可以自己改，个人感觉500毫秒非常合适   
+    return false;   
+};   
+//手释放，如果在500毫秒内就释放，则取消长按事件，此时可以执行onclick应该执行的事件   
+function gtouchend(){   
+    clearTimeout(timeOutEvent);//清除定时器   
+    if(timeOutEvent!=0){   
+        //这里写要执行的内容（尤如onclick事件）   
+        document.getElementById("remaindFooter").style.display ="none";    
+    }   
+    return false;   
+};   
+//如果手指有移动，则取消所有事件，此时说明用户只是要移动而不是长按   
+function gtouchmove(){   
+    clearTimeout(timeOutEvent);//清除定时器   
+    timeOutEvent = 0;   
+      
+};   
+   
+//真正长按后应该执行的内容   
+function longPress(){   
+    timeOutEvent = 0;   
+    //执行长按要执行的内容，如弹出菜单   
+    document.getElementById("remaindFooter").style.display ="";  
+}   
+		</script>
+	</body>
+
+</html>

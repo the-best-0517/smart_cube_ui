@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+	<!--	<meta  name="viewport" content="viewport-fit=cover,width=70,user-scalable=no"/><--></-->
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<!--App自定义的css-->
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		<style>
+			.mui-content-padded{
+			  	margin: 10px;
+			  }
+			 #my button{
+			 	position:absolute;
+			 	margin-top: 3px;
+			 	top: 9.2%;
+			 	height: 100px;
+			 }
+			 #head{
+			 	width: 60px;
+			 	height: 60px;
+			 	position:absolute;
+			 	z-index:999;
+			 	left: 6%;
+			 	top: 11.4%;
+			 }
+			 #code{
+			 	width: 40px;
+			 	height: 40px;
+			 	position:absolute;
+			 	z-index:999;
+			 	left: 77%;
+			 	top: 12.5%;
+			 }
+			 #myinfo button{
+			 	top: 58.2%;
+			 	position: absolute;
+			 	font-weight: bolder;
+			 }
+			 #myinfo img{
+			 	width: 30px;
+			 	height: 30px;
+			 	position: absolute;
+			 	left: 6%;
+			 	top:59.7%;
+			 }
+			 #follow button{
+			 	top: 28.3%;
+			 	position: absolute;
+			 	font-weight: bolder;
+			 }
+			 #follow img{
+			 	width: 30px;
+			 	height: 30px;
+			 	position: absolute;
+			 	left: 6%;
+			 	top:29.5%;
+			 }
+			 #collection button{
+			 	top: 38.1%;
+			 	position: absolute;
+			 	font-weight: bolder;
+			 }
+			 #collection img{
+			 	width: 30px;
+			 	height: 30px;
+			 	position: absolute;
+			 	left: 6%;
+			 	top:39.6%;
+			 }
+			 #history button{
+			 	top: 48.3%;
+			 	position: absolute;
+			 	font-weight: bolder;
+			 }
+			 #history img{
+			 	width: 30px;
+			 	height: 30px;
+			 	position: absolute;
+			 	left: 6%;
+			 	top:49.6%;
+			 }
+			 #billRecord button{
+			 	top: 69%;
+			 	position: absolute;
+			 	font-weight: bolder;
+			 }
+			 #billRecord img{
+			 	width: 30px;
+			 	height: 30px;
+			 	position: absolute;
+			 	left: 6%;
+			 	top:70%;
+			 }
+			  #pastills button{
+			 	top: 79%;
+			 	position: absolute;
+			 	font-weight: bolder;
+			 }
+			 #pastills img{
+			 	width: 30px;
+			 	height: 30px;
+			 	position: absolute;
+			 	left: 6%;
+			 	top:80%;
+			 }
+			 .mui-btn-block {
+			 	width:95%;	
+			 }
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <h1 class="mui-title">个人中心</h1>
+		</header>
+		<div class="mui-content">
+		    <div class="mui-content-padded" id="my" onclick="window.location.href='personMsg.html'">
+		        <button type="button" class="mui-btn mui-btn-block" ><p id="userName"></p></button>
+		        <img src="" id="head"/>
+		        <img src="" id="code"/>
+		    </div>
+		    <div class="mui-content-padded" id="follow">
+       		 <button type="button" onclick="window.open('myMdicine.html');" class="mui-btn mui-btn-block" >我的药盒&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+		        <img src="images/Star_75.378299120235px_1191096_easyicon.net.png"/>
+		    </div>
+		    
+		    <div class="mui-content-padded" id="pastills">
+       		 <button type="button" onclick="window.open('myCase.html')" class="mui-btn mui-btn-block" >我的病例&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+		        <img src="images/Star_75.378299120235px_1191096_easyicon.net.png"/>
+		    </div>
+		    <div class="mui-content-padded" id="billRecord">
+       		 <button type="button" onclick="openNewPage('myRemind.html');" class="mui-btn mui-btn-block" >我的提醒&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+		        <img src="images/Star_75.378299120235px_1191096_easyicon.net.png"/>
+		    </div>
+		    
+		    <div class="mui-content-padded" id="collection">
+       		 <button type="button" onclick="window.open('infoCard.html');" class="mui-btn mui-btn-block" >紧急信息卡&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+		        <img src="images/heart_82.285714285714px_1101030_easyicon.net.png"/>
+		    </div>
+		    <div class="mui-content-padded" id="history">
+       		 <button type="button" onclick="window.open('relationManager.html');" class="mui-btn mui-btn-block" >家属模式&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+		        <img src="images/Share_75.111111111111px_1190977_easyicon.net.png"/>
+		    </div>
+		    <div class="mui-content-padded" id="myinfo">
+       		 <button onclick="window.location.href='html/set.html';" type="button" class="mui-btn mui-btn-block" >设置&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+		        <img src="images/Settings_64px_1191093_easyicon.net.png"/>
+		    </div>
+		</div>
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/jquery-2.1.0.js"></script>
+	<script type="text/javascript" src="../js/json.js" ></script>
+	<script>
+		mui.init({
+			swipeBack:true //启用右滑关闭功能
+		});
+		$(function(){
+			showPersonMsg();
+		});
+				/**
+			 * 展示个人基本信息
+			 */
+			function showPersonMsg(){
+				ip = getIP();
+				var url = ip+"login/showPersonMsg.do";
+			//	var userId="<%=session.getAttribute('userId')%>"; 
+
+				$.post(url,function(res){
+					if(res.state==1){
+						console.log(res.data);
+						addPersonOtherMsg(res.data);
+					}
+				});
+			}
+			function addPersonOtherMsg(data){
+				$('#userName').text(data[0].userName);
+				$("#head").attr("src","http://120.79.10.49:8080/smart_cube/"+data[0].headImgPath);
+				$("#code").attr("src","http://120.79.10.49:8080/smart_cube/"+data[0].qrCode);
+			}
+		/*跳转页面（待修改）*/
+		function openNewPage(url){
+			window.open("myRemind.html");
+		}
+		
+	</script>
+</html>

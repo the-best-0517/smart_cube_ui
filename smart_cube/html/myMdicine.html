@@ -1,0 +1,282 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<script src="../js/jquery-2.1.0.js"></script>
+		<style>
+			.mui-slider-indicator{
+				position: relative;
+				
+			}
+			.mui-slider-indicator {
+				bottom: 0;
+			}
+			.mui-slider {
+				background-color: #f2f2f2;
+			}
+			table{
+				margin: auto;
+				border: none;
+			}
+			table td{
+				margin: auto;
+				width:110px;
+				height:110px;
+				background-color:#0E76E1;
+				border:none;
+				text-align: center;
+				border-radius:40px;
+				-moz-border-radius:25px;
+			}
+			#red{
+				background-color:red;
+			}
+			#green{
+				background-color:green;
+			}
+			/*table td:active{
+				background-color:yellow;
+			}*/
+		</style>
+		<script>
+			/*$(document).ready(function(){  
+        		var slider = document.getElementById('Gallery');
+			var group = slider.querySelector('.mui-slider-group');
+			var items = mui('.mui-slider-item', group);
+			//克隆第一个节点
+			var first = items[0].cloneNode(true);
+			first.classList.add('mui-slider-item-duplicate');
+			//克隆最后一个节点
+			var last = items[items.length - 1].cloneNode(true);
+			last.classList.add('mui-slider-item-duplicate');
+			//处理是否循环逻辑，若支持循环，需支持两点：
+			//1、在.mui-slider-group节点上增加.mui-slider-loop类
+			//2、重复增加2个循环节点，图片顺序变为：N、1、2...N、1
+			var sliderApi = mui(slider).slider();
+			
+			function toggleLoop(loop) {
+					if (loop) {
+						group.classList.add('mui-slider-loop');
+						group.insertBefore(last, group.firstChild);
+						group.appendChild(first);
+						sliderApi.refresh();
+						sliderApi.gotoItem(0);
+					} else {
+						group.classList.remove('mui-slider-loop');
+						group.removeChild(first);
+						group.removeChild(last);
+						sliderApi.refresh();
+						sliderApi.gotoItem(0);
+					}
+				}
+			
+			toggleLoop(false);
+			
+    		});*/
+			function canSee(){
+				var rows = $('#myBox tr');
+				var order=$('#order').val();
+				var index=0;
+				for (var i = rows.length - 1; i >= 0; i--) {
+					var boxs = rows.eq(i).find('td');
+					boxs.each(function() {
+						console.log($(this).text());
+						if(order.charAt(index)=='1'){
+							$(this).css("background-color","yellow");
+							$(this).text("有药");
+						}else{
+							$(this).text("无药");
+						}
+						index++;
+						
+					});
+				}
+			}
+			
+		</script>
+		<script type="text/javascript" src="../js/mui.js" ></script>
+		<script type="text/javascript" src="../js/json.js" ></script>
+		<script>
+			var ip = getIP();
+			$(function(){
+//				var X = $('#DivID').offset().top; 
+//				console.log("X:"+X);
+//				var Y = $('#DivID').offset().left; 
+//				console.log("Y:"+Y);
+				showMdicineBox();
+			});
+			/**
+			 * 加载药盒数据
+			 */
+			function showMdicineBox(){
+				var url = ip+"medicine/showMdicineBox.do";
+				$.post(url,function(res){
+					if(res.state==1){
+						console.log(res.data)
+						addMdicineBox(res.data);
+					}
+				})
+			}
+			/**
+			 * 画出药盒
+			 */
+			function addMdicineBox(data){
+				var div = '	<div class="mui-slider-item">'
+				+	'<table border="1" class="table" id="[boxSerial]">'
+				+		'</table>'
+				+	'</div>';
+				
+				var tr = '	<tr>'
+					+	'	<td onclick="showMedicine(this);">[one]</td>'
+					+	'	<td onclick="showMedicine(this);">[two]</td>'
+					+	'	<td onclick="showMedicine(this);">[third]</td>'
+					+	'	</tr>';
+					
+				//var d1 = '	<div class="mui-indicator mui-active">[i]</div>';
+				//var d2 = '<div class="mui-indicator">[i]</div>';
+				$('#addBox').empty();
+				for(var i=0;i<data.length;i++){
+					var  d = div.replace("[boxSerial]",data[i].boxSerial);
+					$('#addBox').append(d);
+					if(i==0){
+						var d1 = '	<div class="mui-indicator mui-active" id="[i]"></div>';
+						d1 = d1.replace("[i]",i+1);
+						$('#changeBox').append(d1);
+					}else{
+						var d2 = '<div class="mui-indicator" id="[i]"></div>';
+						d2 = d2.replace("[i]",i+1);
+						$('#changeBox').append(d2);
+					}
+					for(var j=0;j<(data[i].sNum)/3;j++){
+						var t = tr.replace("[one]",1+(3*j)+(i*data[i].sNum))
+								 .replace("[two]",2+(3*j)+(i*data[i].sNum))
+								 .replace("[third]",3+(3*j)+(i*data[i].sNum));
+						$('#'+data[i].boxSerial).append(t);
+					}
+				}
+			}
+			
+			/**
+			 * 跳转药品记录
+			 * @param {Object} e
+			 */
+			function showMedicine(e){
+				$('table td').css("background-color","bule");
+				$(e).css("background-color","yellow");
+				var boxId = $(e).text();
+				selPillRecord(boxId);
+				//window.location.href = 'pillsRecord.html?boxId='+boxId;
+			};
+					/*
+		 * 根据boxId 查询药品信息
+		 */
+		function selPillRecord(boxId){
+			var url = ip+"medicine/selPillRecord.do";
+			var params = {
+				boxId:boxId
+			};
+			$('#boxId').val(boxId);
+			$.post(url,params,function(res){
+				if(res.state==1){
+					addPillRecord(res.data);
+				}
+			});
+		}
+		function addPillRecord(data){
+			var li = '<div id="drafting"><li class="mui-table-view-cell" id="">[pillDesc]<span class="mui-badge mui-badge-primary">[dose]</span></li></div>';
+			$('#addMedicine').empty();
+			for(var i=0;i<data.length;i++){
+					var l = li.replace("[pillDesc]",data[i].pillDesc)
+							  .replace("[dose]",data[i].dose);
+					$('#addMedicine').append(l);
+			}
+			}
+		/**
+		 * 监听拖动
+		 */
+		mui(document).on('dragend','#drafting',function(e){
+			debugger
+			var pillDesc = e.target.innerText;
+			console.log("x:"+e.detail.center.x);
+			console.log("y:"+e.detail.center.y);
+			var x = e.detail.center.x;
+			var y = e.detail.center.y;
+			var whichMedBox  = $('#changeBox .mui-active').attr("id");
+			var boxId = $('#boxId').val();
+			var url =ip+"/medicine/checkMove.do";
+			var params = {
+				x:x,
+				y:y,
+				whichMedBox:whichMedBox,
+				pillDesc:pillDesc,
+				boxId:boxId
+			};
+			$.post(url,params,function(res){
+				if(res.state==1){
+					alert("res.data.goalBox:"+res.data[0]);
+					selPillRecord(boxId);
+				}
+			});
+		});
+/*	//监听左滑动
+		mui(document).on('swipeleft','.mui-slider-item',function(e){
+			 console.log("你正在向左滑动");
+			 $('#swipe').val($('#swipe').val()+1);
+			 console.log($('#swipe').val())
+		});
+	//监听右滑动
+		mui(document).on('swiperight ','.mui-slider-item',function(e){
+			 console.log("你正在向右滑动");
+		});*/
+		</script>
+	</head>
+
+	<body>
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			
+		</script>
+		
+		<div class="mui-content">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" onclick="window.history.go(-1);"></a>
+			<h1 class="mui-title">我的药盒</h1>
+		</header>
+		<h1> 11</h1>
+   <div id="Gallery" class="mui-slider" style="margin-top:15px;">
+				<div class="mui-slider-group" id="addBox">
+					<div class="mui-slider-item">
+						<table border="1" class="table" id="myBox">
+							<tr>
+							<td id="DivID">1</td>
+							<td>2</td>
+							<td>3</td>
+							</tr>
+							<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							</tr>
+							<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							</tr>
+							
+							</table>
+					</div>
+				</div>
+				<div class="mui-slider-indicator" id="changeBox">			
+				</div>
+			</div>
+			<div id="addMedicine">
+				
+			</div>
+			<input type="hidden" id="boxId" value=""/>
+	</body>
+</html>

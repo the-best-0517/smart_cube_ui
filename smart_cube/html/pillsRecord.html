@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+	</head>
+	<body>
+		  <header class="mui-bar mui-bar-nav">
+		   <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		   <h1 class="mui-title">药品记录</h1>
+		  </header> 
+		  <h1>1</h1>
+		<div id="addMedicine">
+			     <li class="mui-table-view-cell">Item 1 <span class="mui-badge mui-badge-primary">14</span></li>
+		         <li class="mui-table-view-cell">Item 2 <span class="mui-badge mui-badge-success">1</span></li>
+		         <li class="mui-table-view-cell">Item 3 <span class="mui-badge">5</span></li>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript" src="../js/jquery-2.1.0.js" ></script>
+		<script type="text/javascript" src="../js/json.js" ></script>
+		<script type="text/javascript">
+			mui.init();		
+		</script>	
+		<script>
+			var boxId;
+			var ip;
+		$(function(){
+			ip = getIP();
+			boxId = oneValues();
+			console.log(boxId);
+			selPillRecord();
+		});
+		/*
+		 * 根据boxId 查询药品信息
+		 */
+		function selPillRecord(){
+			var url = ip+"medicine/selPillRecord.do";
+			var params = {
+				boxId:boxId
+			};
+			$.post(url,params,function(res){
+				if(res.state==1){
+					addPillRecord(res.data);
+				}
+			});
+		}
+		function addPillRecord(data){
+			var li = '<li class="mui-table-view-cell">[pillDesc]<span class="mui-badge mui-badge-primary">[dose]</span></li>';
+			$('#addMedicine').empty();
+			for(var i=0;i<data.length;i++){
+					var l = li.replace("[pillDesc]",data[i].pillDesc)
+							  .replace("[dose]",data[i].dose);
+					$('#addMedicine').append(l);
+			}
+			}
+		//接收一个值
+		function oneValues(){
+				var result;
+				var url=window.location.search; //获取url中"?"符后的字串  
+				if(url.indexOf("?")!=-1){
+				result = url.substr(url.indexOf("=")+1);
+				}
+				return result;
+		}
+	
+		</script>
+	</body>
+</html>

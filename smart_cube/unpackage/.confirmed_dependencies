@@ -1,0 +1,129 @@
+{
+  "index.html": {
+    "refer": [
+      "html/outh.html",
+      "html/main.html",
+      "html/reg.html",
+      "html/forget_password.html"
+    ]
+  },
+  "html/main.html": {
+    "refer": [
+      "index.html",
+      "html/myRemind.html",
+      "html/barcode_scan.html",
+      "html/barcode.html",
+      "html/addRemaind.html",
+      "html/pillDetailMsg.html",
+      "uploadImg.html",
+      "html/myCase.html",
+      "html/findMap.html",
+      "html/relationManager.html",
+      "html/myMdicine.html",
+      "html/infoCard.html"
+    ],
+    "resources": [
+      "html/me.html"
+    ]
+  },
+  "html/reg.html": {
+    "refer": [
+      "index.html",
+      "html/forget_password.html"
+    ]
+  },
+  "html/forget_password.html": {
+    "refer": [
+      "index.html",
+      "html/forget_password.html"
+    ]
+  },
+  "html/myRemind.html": {
+    "refer": [
+      "html/main.html",
+      "html/me.html",
+      "html/addRemaind.html",
+      "html/relationManager.html",
+      "index.html",
+      "html/barcode.html"
+    ]
+  },
+  "html/me.html": {
+    "refer": [
+      "html/myRemind.html"
+    ]
+  },
+  "html/barcode.html": {
+    "refer": [
+      "html/main.html",
+      "html/addRemaind.html"
+    ]
+  },
+  "html/addRemaind.html": {
+    "refer": [
+      "html/barcode.html",
+      "html/main.html",
+      "html/myRemind.html"
+    ]
+  },
+  "html/pillDetailMsg.html": {
+    "refer": [
+      "html/main.html"
+    ]
+  },
+  "uploadImg.html": {
+    "refer": [
+      "html/main.html",
+      "html/addCase.html"
+    ]
+  },
+  "html/myCase.html": {
+    "resources": [
+      "js/mui.zoom.js"
+    ],
+    "refer": [
+      "html/main.html",
+      "html/addCase.html"
+    ]
+  },
+  "html/addCase.html": {
+    "refer": [
+      "uploadImg.html",
+      "html/myCase.html"
+    ]
+  },
+  "html/relationManager.html": {
+    "refer": [
+      "html/relationAdd.html",
+      "html/main.html",
+      "html/myRemind.html"
+    ]
+  },
+  "html/relationAdd.html": {
+    "refer": [
+      "html/relationManager.html"
+    ]
+  },
+  "html/findMap.html": {
+    "refer": [
+      "html/main.html"
+    ]
+  },
+  "html/myMdicine.html": {
+    "refer": [
+      "html/main.html",
+      "html/pillsRecord.html",
+      "index.html"
+    ]
+  },
+  "html/pillsRecord.html": {
+    "refer": [
+      "html/myMdicine.html"
+    ]
+  },
+  "html/infoCard.html": {
+    "refer": [
+      "html/main.html"
+    ]
+  }
+}

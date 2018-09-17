@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../css/mui.min.css">
+				<script type="text/javascript" src="../js/common.js" ></script>
+		<!--App自定义的css-->
+		<!-- <link rel="stylesheet" type="text/css" href="../css/app.css" /> -->
+		<style>
+			h5 {
+				margin: 5px 7px;
+			}
+			#addsel{
+				width: 115px;
+			    position: absolute;
+			    right: 0px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" id="back"></a>
+			<h1 class="mui-title">添加药品</h1>
+			<div>
+				<select id="addsel">
+				  <option value="volvo">+</option>
+				  <option value="saab">扫码添加</option>
+				  <option value="opel">处方添加</option>
+				  <option value="audi">与上一次一样</option>
+				</select>
+			</div>
+		</header>
+		<div class="mui-content">
+			<div class="mui-content-padded" style="margin: 5px;">
+
+				<form class="mui-input-group">
+			
+					<div class="mui-input-row">
+						<label>药品名</label>
+						<input type="text" class="mui-input-clear" placeholder="" id="pillDesc">
+					</div>
+						<div class="mui-input-row">
+						<label>用量</label>
+						<input type="text" class="mui-input-clear" placeholder="" id="instructions">
+					</div>
+						<div class="mui-input-row">
+						<label>用法</label>
+						<input type="text" class="mui-input-clear" placeholder="" id="whereEating">
+					</div>
+						<div class="mui-input-row">
+						<label>分析结果</label>
+						<input type="text" class="mui-input-clear" placeholder="" id="groom">
+					</div>
+					
+					<div class="mui-button-row">
+						<button type="button" class="mui-btn mui-btn-primary" onclick="savePillMsg();">确认</button>&nbsp;&nbsp;
+						<button type="button" class="mui-btn mui-btn-danger" onclick="clearPillMsg();">重置</button>
+					</div>
+				</form>
+
+			</div>
+			<div class="mui-content-padded" style="margin: 15px;background-color: #ccc;" >
+				<!--	<div class="mui-input-row">
+						<label>开始时间</label>
+						<input type="date" class="mui-input-clear" placeholder="" id="startTime">
+					</div>-->
+						<div class="mui-input-row">
+						<label>天数</label>
+						<input type="text" class="mui-input-clear" placeholder="" id="times">
+					</div>
+				<div id="jsonPills">  
+				<div style="border-color: #8e8383;border-style: dashed;">
+					<div class="mui-input-row">
+						<label>药品名</label>
+						<input type="text" class="mui-input-clear" placeholder="" id="pillDesc" readonly="readonly">
+					</div>
+						<div class="mui-input-row">
+						<label>用法用量</label>
+						<input type="text" class="mui-input-clear" placeholder="" id="instructions" readonly="readonly" >
+					</div>
+				</div>
+				<div style="border-color: #8e8383;border-style: dashed;">
+					<div class="mui-input-row">
+						<label>药品名</label>
+						<input type="text" class="mui-input-clear" placeholder="" id="pillDesc" readonly="readonly">
+					</div>
+					<div class="mui-input-row">
+						<label>用法用量</label>
+						<input type="text" class="mui-input-clear" placeholder="" id="instructions" readonly="readonly" >
+					</div>
+				</div>
+				</div>
+				<div class="mui-button-row">
+					<button type="button" class="mui-btn mui-btn-primary" onclick="saveAllPills();">保存药品</button>&nbsp;&nbsp;
+				</div>
+			</div>
+		</div>
+
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript" src="../js/immersed.js" ></script>		
+		<script type="text/javascript" src="../js/jquery-2.1.0.js" ></script>
+		<script type="text/javascript" src="../js/json.js" ></script>
+		<script>
+			var phone;
+			var pillJson = {
+			};
+			 var saveDataAry=[];  
+			var i=0;
+			var ip ;
+			 $(function(){
+			 	phone = localStorage.getItem("phone");
+			 	localStorage.removeItem("phone");
+			 	var result = oneValues();
+			 	ip = getIP();
+			 	if(result){
+			 		//查询药品信息
+			 		var url = ip+"remiand/findPillMsgByPillId.do";
+			 		var params = {
+			 			pillId:result
+			 		};
+			 		$.ajax({
+			 			type:"get",
+			 			url:url,
+			 			dataType:'json',
+			 			data:params,
+			 			async:false,
+			 			success:function(res){
+			 				console.log("res0:"+res.data)
+			 				if(res.state==1&&res.data.length>0){
+			 					//添加药品信息
+			 					var data = res.data;
+			 					var pillDesc = data[0].pillDesc;
+			 					var instructions = data[0].instructions;
+			 					var whereEating = data[0].whereEating;
+			 					var groom = data[0].groom;
+			 					$('#pillDesc').val(pillDesc);
+			 					$('#instructions').val(instructions);	
+			 					$('#whereEating').val(whereEating);
+			 					$('#groom').val(groom);
+			 				}
+			 			}
+			 		});
+			 	}
+            $('#addsel').change(function(e){
+               var selected_val = document.getElementById("addsel").value;
+                console.log("selected_val:"+selected_val);
+                if(selected_val=='saab'){
+                	//扫马
+                	window.location.href = "barcode.html";
+                }
+            })
+        });
+        
+        //接收一个值
+		function oneValues(){
+				var result;
+				var url=window.location.search; //获取url中"?"符后的字串  
+				if(url.indexOf("?")!=-1){
+				result = url.substr(url.indexOf("=")+1);
+				}
+				return result;
+		}
+		//保存到临时数据
+		function savePillMsg(){
+			var pillDesc = $('#pillDesc').val();
+			var instructions = $('#instructions').val();	
+			var whereEating = $('#whereEating').val();
+			pillJson["pillDesc"+i] = pillDesc;
+			pillJson["instructions"+i] = instructions;
+			pillJson["whereEating"+i] = whereEating;
+			i++;
+			addJsonDiv(pillDesc,instructions);
+			console.log(pillJson);
+			clearPillMsg();
+		}
+		//添加临时药品数据
+		function addJsonDiv(pillDesc,instructions){
+			var div = '	<div style="border-color: #8e8383;border-style: dashed;">'
+		+	'		<div class="mui-input-row">'
+		+	'			<label>药品名</label>'
+		+	'			<input type="text" value="'+pillDesc+'" class="mui-input-clear" placeholder="" id="pillDesc" readonly="readonly">'
+		+	'		</div>'
+		+	'			<div class="mui-input-row">'
+		+	'			<label>用法用量</label>'
+		+	'			<input type="text" value="'+instructions+'" class="mui-input-clear" placeholder="" id="instructions" readonly="readonly" >'
+		+	'		</div>'
+		+	'	</div>';
+		var jsonPills = $('#jsonPills');
+		jsonPills.append(div);
+		}
+		/**保存所有药品信息，生成提醒记录*/
+		function saveAllPills(){
+			var times = $('#times').val();
+			console.log("times:"+times)
+			var url = ip+"remiand/makeRemiandBypills.do";
+			var param = {
+//				jsonPills:pillJson,
+				phone:phone,
+				times:times
+			};
+			var params = $.extend({},pillJson, param);
+//			pillJson[i] = phone;
+//			pillJson[i] = times;
+//			saveDataAry.push(pillJson);
+//			saveDataAry.push(params);
+//			console.log("saveDataAry:"+saveDataAry);
+			$.ajax({
+				type:"post",
+				url:url,
+				async:true,
+				dataType:"json",
+				data:params, 
+				contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+				success:function(res){
+					if(res.state==1){
+					$('#jsonPills').empty();
+					window.location.href="myRemind.html";
+				}
+				}
+			});
+		}
+		/*清除文本框*/
+		function clearPillMsg(){
+				$('#pillDesc').val("");
+			 	$('#instructions').val("");
+			 	$('instructions').val("");
+		}
+		/**
+		 * 返回
+		 */
+		$('#back').click(function(){
+			alert('55')
+			window.open('myRemind.html');
+		});
+		</script>
+
+	</body>
+
+</html>
