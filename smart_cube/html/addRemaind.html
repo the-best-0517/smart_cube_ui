@@ -12,6 +12,9 @@
 				<script type="text/javascript" src="../js/common.js" ></script>
 		<!--App自定义的css-->
 		<!-- <link rel="stylesheet" type="text/css" href="../css/app.css" /> -->
+	  <link rel="stylesheet" type="text/css" href="../css/mui.picker.min.css">
+       <link rel="stylesheet" type="text/css" href="../css/mui.poppicker.css">
+
 		<style>
 			h5 {
 				margin: 5px 7px;
@@ -23,6 +26,7 @@
 			}
 		</style>
 	</head>
+	
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
@@ -46,19 +50,23 @@
 						<label>药品名</label>
 						<input type="text" class="mui-input-clear" placeholder="" id="pillDesc">
 					</div>
-						<div class="mui-input-row">
-						<label>用量</label>
-						<input type="text" class="mui-input-clear" placeholder="" id="instructions">
-					</div>
-						<div class="mui-input-row">
-						<label>用法</label>
-						<input type="text" class="mui-input-clear" placeholder="" id="whereEating">
-					</div>
-						<div class="mui-input-row">
-						<label>分析结果</label>
-						<input type="text" class="mui-input-clear" placeholder="" id="groom">
-					</div>
 					
+					<div class="mui-input-row" >
+						<label>每日用量</label>
+						<input type="text" class="mui-input-clear" placeholder="" id="EatDay">
+							
+					</div>
+						
+					<div class="mui-input-row" >
+						<label>每次用量</label>
+						<input type="text" class="mui-input-clear" placeholder="" id="EatTimes">
+					</div>
+						
+						<div class="mui-input-row">
+						<label>药物用法</label>
+						<input type="text" class="mui-input-clear" placeholder="" id="howEating">
+					</div>
+
 					<div class="mui-button-row">
 						<button type="button" class="mui-btn mui-btn-primary" onclick="savePillMsg();">确认</button>&nbsp;&nbsp;
 						<button type="button" class="mui-btn mui-btn-danger" onclick="clearPillMsg();">重置</button>
@@ -81,22 +89,17 @@
 						<label>药品名</label>
 						<input type="text" class="mui-input-clear" placeholder="" id="pillDesc" readonly="readonly">
 					</div>
-						<div class="mui-input-row">
-						<label>用法用量</label>
-						<input type="text" class="mui-input-clear" placeholder="" id="instructions" readonly="readonly" >
+						<div class="mui-input-row" >
+						<label>每日用量</label>
+						<input type="text" class="mui-input-clear" placeholder="" id="EatDay" >
+					</div>
+						
+					<div class="mui-input-row" id="EatTimes">
+						<label>每次用量</label>
+						<input type="text" class="mui-input-clear" placeholder="" id="EatTimes">
 					</div>
 				</div>
-				<div style="border-color: #8e8383;border-style: dashed;">
-					<div class="mui-input-row">
-						<label>药品名</label>
-						<input type="text" class="mui-input-clear" placeholder="" id="pillDesc" readonly="readonly">
-					</div>
-					<div class="mui-input-row">
-						<label>用法用量</label>
-						<input type="text" class="mui-input-clear" placeholder="" id="instructions" readonly="readonly" >
-					</div>
-				</div>
-				</div>
+				
 				<div class="mui-button-row">
 					<button type="button" class="mui-btn mui-btn-primary" onclick="saveAllPills();">保存药品</button>&nbsp;&nbsp;
 				</div>
@@ -107,6 +110,203 @@
 		<script type="text/javascript" src="../js/immersed.js" ></script>		
 		<script type="text/javascript" src="../js/jquery-2.1.0.js" ></script>
 		<script type="text/javascript" src="../js/json.js" ></script>
+		<script src="../js/mui.picker.min.js"></script>
+	
+
+
+	<script>
+	/**
+	 * 每日用量
+	 */
+	
+			
+   var picker = new mui.PopPicker({
+   layer: 4,   //4层菜单
+   buttons:['取消','确定']   // 显示按钮名字
+
+});
+   picker.setData([{      
+       text: '1',
+       children: [{
+               text: "日",
+               children: [
+                   {
+                       text:'1',
+                         children:[
+                       {
+             			  text: "次",
+              		  }],
+                   },
+                    {
+                       text:'2',
+                        children:[
+                       {
+             			  text: "次",
+              		  }],
+                   },
+                    {
+                       text:'3',
+                        children:[
+                       {
+             			  text: "次",
+              		  }],
+                   },
+                    
+                    
+              
+               ]
+       }],
+   
+   }])
+   
+
+
+
+document.getElementById('EatDay').addEventListener('tap',function() {
+   picker.show(function(getSelectedItems){   //获取选中的项（数组） 
+     var p =  getSelectedItems[0].text+getSelectedItems[1].text
+    +getSelectedItems[2].text+getSelectedItems[3].text;
+    $('#EatDay').val(p);
+ 
+   })
+
+	   
+
+});
+
+
+   </script>
+
+	<script>
+		/**
+		 * 每次用量
+		 */
+		
+   var picker2 = new mui.PopPicker({
+   layer: 4,   //4层菜单
+   buttons:['取消','确定']   // 显示按钮名字
+
+});
+   picker2.setData([{      
+       text: '1',
+       children: [{
+               text: "次",
+               children: [
+                   {
+                       text:'1',
+                         children:[
+                       {
+             			  text: "粒",
+              		  }],
+                   },
+                    {
+                       text:'2',
+                        children:[
+                       {
+             			  text: "粒",
+              		  }],
+                   },
+                    {
+                       text:'3',
+                        children:[
+                       {
+             			  text: "粒",
+              		  }],
+                   },
+                    {
+                       text:'4',
+                        children:[
+                       {
+             			  text: "粒",
+              		  }],
+                   },
+                    {
+                       text:'5',
+                        children:[
+                       {
+             			  text: "粒",
+              		  }],
+                   },
+                   {
+                       text:'6',
+                        children:[
+                       {
+             			  text: "粒",
+              		  }],
+                   },
+                   {
+                       text:'7',
+                        children:[
+                       {
+             			  text: "粒",
+              		  }],
+                   },
+                   {
+                       text:'8',
+                        children:[
+                       {
+             			  text: "粒",
+              		  }],
+                   },
+                   {
+                       text:'9',
+                        children:[
+                       {
+             			  text: "粒",
+              		  }],
+                   },
+                   {
+                       text:'10',
+                        children:[
+                       {
+             			  text: "粒",
+              		  }],
+                   },
+                    
+              
+               ]
+       }],
+   
+   }])
+		
+		
+document.getElementById('EatTimes').addEventListener('tap',function() {
+   picker2.show(function(getSelectedItems){   //获取选中的项（数组） 
+     var p =  getSelectedItems[0].text+getSelectedItems[1].text
+    +getSelectedItems[2].text+getSelectedItems[3].text;
+    $('#EatTimes').val(p);
+ 
+   })
+
+});
+		
+	
+	</script>
+	
+	
+	<script>
+		
+
+					var picker3 = new mui.PopPicker();
+					picker3.setData([{
+						value: 'beforefood',
+						text: '饭前'
+					}, {
+						value: 'afterFood',
+						text: '饭后'
+					}]);
+					document.getElementById('howEating').addEventListener('tap', function(event) {
+						
+						picker3.show(function(items) {
+							
+							var p=items[0].text;
+							 $('#howEating').val(p);
+						});
+					}, false);
+		
+	</script>
+		
+
 		<script>
 			var phone;
 			var pillJson = {
@@ -137,12 +337,14 @@
 			 					//添加药品信息
 			 					var data = res.data;
 			 					var pillDesc = data[0].pillDesc;
-			 					var instructions = data[0].instructions;
+			 					var EatDay = data[0].EatDay;
+			 					var EatTimes= data[0].EatTimes;
 			 					var whereEating = data[0].whereEating;
 			 					var groom = data[0].groom;
 			 					$('#pillDesc').val(pillDesc);
-			 					$('#instructions').val(instructions);	
-			 					$('#whereEating').val(whereEating);
+			 					$('#EatDay').val(EatDay);
+			 					$('#EatTimes').val(EatTimes);
+			 					$('#howEating').val(howEating);
 			 					$('#groom').val(groom);
 			 				}
 			 			}
@@ -152,7 +354,7 @@
                var selected_val = document.getElementById("addsel").value;
                 console.log("selected_val:"+selected_val);
                 if(selected_val=='saab'){
-                	//扫马
+                	//扫码
                 	window.location.href = "barcode.html";
                 }
             })
@@ -170,27 +372,37 @@
 		//保存到临时数据
 		function savePillMsg(){
 			var pillDesc = $('#pillDesc').val();
-			var instructions = $('#instructions').val();	
-			var whereEating = $('#whereEating').val();
+			
+			$('#EatDay').val(EatDay);
+			$('#EatTimes').val(EatTimes);
+			$('#howEating').val(howEating);
 			pillJson["pillDesc"+i] = pillDesc;
-			pillJson["instructions"+i] = instructions;
-			pillJson["whereEating"+i] = whereEating;
+			pillJson["EatDay"+i] = EatDay;
+			pillJson["EatTimes"+i] = EatTimes;
+			pillJson["howEating"+i] = howEating;
 			i++;
-			addJsonDiv(pillDesc,instructions);
+			addJsonDiv(pillDesc,EatDay,EatTimes);
 			console.log(pillJson);
 			clearPillMsg();
 		}
 		//添加临时药品数据
-		function addJsonDiv(pillDesc,instructions){
+		function addJsonDiv(pillDesc,EatDay,EatTimes){
 			var div = '	<div style="border-color: #8e8383;border-style: dashed;">'
 		+	'		<div class="mui-input-row">'
 		+	'			<label>药品名</label>'
 		+	'			<input type="text" value="'+pillDesc+'" class="mui-input-clear" placeholder="" id="pillDesc" readonly="readonly">'
 		+	'		</div>'
 		+	'			<div class="mui-input-row">'
-		+	'			<label>用法用量</label>'
-		+	'			<input type="text" value="'+instructions+'" class="mui-input-clear" placeholder="" id="instructions" readonly="readonly" >'
+		+	'			<label>每日用量</label>'
+		+	'				<input type="text" value="'+EatDay+'" class="mui-input-clear" placeholder="" id="EatDay" >
 		+	'		</div>'
+		
+		+	'			<div class="mui-input-row">'
+		+	'			<label>每次用量</label>'
+		+	'				<input type="text" value="'+EatTimes+'" class="mui-input-clear" placeholder="" id="EatTimes" >
+		+	'		</div>'
+		
+		
 		+	'	</div>';
 		var jsonPills = $('#jsonPills');
 		jsonPills.append(div);
@@ -229,8 +441,9 @@
 		/*清除文本框*/
 		function clearPillMsg(){
 				$('#pillDesc').val("");
-			 	$('#instructions').val("");
-			 	$('instructions').val("");
+				$('#EatDay').val("");
+			 	$('#EatTimes').val("");
+			 	$('#howEating').val("");
 		}
 		/**
 		 * 返回
