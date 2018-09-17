@@ -184,7 +184,7 @@
 			<image id="addCases" src="">
 		</header>
 		<div class="mui-content" id="caseText">	
-			<!--<div class="mui-card">
+			<div class="mui-card">
 				<div class="mui-card-header mui-card-media">
 					<img src="images/logo.png" />
 					<div class="mui-media-body">	
@@ -198,7 +198,7 @@
 				<div class="mui-slider-group mui-slider-loop" id="addImg">									
 					<div class="mui-slider-item">
 						<a href="#">
-							<img src="" data-preview-src="" data-preview-group="1">							
+							<img src="images/add.png" data-preview-src="" data-preview-group="1">							
 						</a>
 					</div>					
 					<div class="mui-slider-item">
@@ -219,7 +219,7 @@
 					<a class="mui-card-link" id="edit">编辑</a>
 					<a class="mui-card-link" id="delete">删除</a>
 				</div>
-			</div>-->
+			</div>
 		</div>
 	</body>
 	<script src="../js/mui.min.js"></script>
@@ -255,19 +255,20 @@
 		+	'		</div>				'
 		+	'	</div>				'
 		+	'	<div class="mui-card-content" >			'	
-		+	'	 <div id="slider" class="">	'	
+		+	'	 <div id="slider" class="mui-slider">	'	
 		+	'<div class="mui-slider-group mui-slider-loop" id="[caseId]">' //添加图片
 		+	'</div>'
 		+	'<div class="mui-slider-indicator mui-text-right" id="cb[caseId]">' //添加轮播按钮
 		+	'<div/>'
 		+	'	</div>	 '
 		+	'</div>'
+		+    '</div>'
 		+	'	<div class="mui-card-footer">'
 		+	'		<a class="mui-card-link" id="edit">编辑</a>'
 		+	'		<a class="mui-card-link" id="[caseId]" onclick="delCase(this.id);">删除</a>'
 		+	'	</div>'
 		+	'</div>';
-					$('#caseText').empty();
+				//	$('#caseText').empty();
 					for(var i=0;i<data.length;i++){
 						var d = div.replace("[caseTime]",data[i].caseTime)
 							.replace("[caseDesc]",data[i].caseDesc)
@@ -301,8 +302,8 @@
 					+'</div>	';
 				var div2 = '<div class="mui-indicator mui-active"></div>';
 				var div3 = '<div class="mui-indicator"></div>';
-				$('#'+caseId).empty();
-				$('#cb'+caseId).empty();
+				//$('#'+caseId).empty();
+				//$('#cb'+caseId).empty();
 				for(var i=0;i<data.length;i++){
 					if(i==0){
 						$('#cb'+caseId).append(div2);
