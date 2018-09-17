@@ -206,10 +206,10 @@
 			//var li = '<div id="drafting"><li class="mui-table-view-cell" id="">[pillDesc]<span class="mui-badge mui-badge-primary">[dose]</span></li></div>';
 			var li =  '<div id="drafting"><li class="mui-table-view-cell" style="list-style-type:none;">'
 			+	'	<div class="mui-slider-left mui-disabled">'
-			+	'		<a class="mui-btn mui-btn-blue">编辑</a>'
+			+	'		<a class="mui-btn mui-btn-blue" id="[pillId]">编辑</a>'
 			+	'	</div>'
 			+	'	<div class="mui-slider-right mui-disabled">'
-			+	'		<a class="mui-btn mui-btn-red">删除</a>'
+			+	'		<a  id="[pillId]" class="mui-btn mui-btn-red" id="delBill" onclick="deleteBill(this.id);">删除</a>'
 			+	'	</div>'
 			+	'	<div class="mui-slider-handle">'
 			+	'		[pillDesc]'
@@ -219,7 +219,9 @@
 			$('#addMedicine').empty();
 			for(var i=0;i<data.length;i++){
 					var l = li.replace("[pillDesc]",data[i].pillDesc)
-							  .replace("[dose]",data[i].dose);
+							  .replace("[dose]",data[i].dose)
+							  .replace("[pillId]",data[i].pillId)
+							  .replace("[pillId]",data[i].pillId);
 					$('#addMedicine').append(l);
 			}
 			}
@@ -234,7 +236,7 @@
 			var y = e.detail.center.y;
 			var whichMedBox  = $('#changeBox .mui-active').attr("id");
 			var boxId = $('#boxId').val();
-			var url =ip+"/medicine/checkMove.do";
+			var url =ip+"medicine/checkMove.do";
 			var params = {
 				x:x,
 				y:y,
@@ -249,6 +251,26 @@
 				}
 			});
 		});
+		
+		/**
+		 * 删除
+		 */
+		function deleteBill(pillId){
+			console.log(pillId);
+			var boxId = $('#boxId').val();
+			var url = ip+"medicine/deleteBill.do";
+			var params = {
+				boxId:boxId,
+				pillId:pillId
+			};
+			$.post(url,params,function(res){
+				if(res.state==1){
+					alert("delete ok!");
+					selPillRecord(boxId);
+				}
+			});
+			
+		}
 /*	//监听左滑动
 		mui(document).on('swipeleft','.mui-slider-item',function(e){
 			 console.log("你正在向左滑动");
