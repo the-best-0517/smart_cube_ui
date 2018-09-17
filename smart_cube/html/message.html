@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+	</head>
+	<script src="../js/jquery-2.1.0.js"></script>
+	<script>
+		$(document).ready(function(){  
+        	$('.mui-ellipsis').click(function(){
+        		window.open("messageDetail.html");
+        		
+        	});
+        	
+    	});
+	</script>
+	<body>
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init({swipeBack:true} );//启用右滑关闭功能
+		</script>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">消息</h1>
+		</header>
+		<div class="title" style="margin-bottom: 50px;">
+				
+		</div>
+			<div class="mui-card" style="margin-bottom: 50px;">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-media">
+						<a href="javascript:;">
+							<img class="mui-media-object mui-pull-left" src="../images/muwu.jpg">
+							<div class="mui-media-body">
+								官方1
+								<p class='mui-ellipsis'>想要这样一间小木屋，夏天挫冰吃瓜，冬天围炉取暖.</p>
+							</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media">
+						<a href="javascript:;">
+							<img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
+							<div class="mui-media-body">
+								官方2
+								<p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+							</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media">
+						<a href="javascript:;">
+							<img class="mui-media-object mui-pull-left" src="../images/yuantiao.jpg">
+							<div class="mui-media-body">
+								官方3
+								<p class='mui-ellipsis'>静静的看这个世界，最后终于疯了</p>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+	</body>
+
+</html>
