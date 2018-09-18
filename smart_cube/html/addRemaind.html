@@ -100,10 +100,11 @@
 					</div>
 				</div>
 				
-				<div class="mui-button-row">
+				
+			</div>
+			<div class="mui-button-row">
 					<button type="button" class="mui-btn mui-btn-primary" onclick="saveAllPills();">保存药品</button>&nbsp;&nbsp;
 				</div>
-			</div>
 		</div>
 
 		<script src="../js/mui.min.js"></script>
@@ -373,9 +374,9 @@ document.getElementById('EatTimes').addEventListener('tap',function() {
 		function savePillMsg(){
 			var pillDesc = $('#pillDesc').val();
 			
-			$('#EatDay').val(EatDay);
-			$('#EatTimes').val(EatTimes);
-			$('#howEating').val(howEating);
+			var EatDay = $('#EatDay').val();
+			var EatTimes = $('#EatTimes').val();
+			var howEating = $('#howEating').val();
 			pillJson["pillDesc"+i] = pillDesc;
 			pillJson["EatDay"+i] = EatDay;
 			pillJson["EatTimes"+i] = EatTimes;
@@ -394,12 +395,12 @@ document.getElementById('EatTimes').addEventListener('tap',function() {
 		+	'		</div>'
 		+	'			<div class="mui-input-row">'
 		+	'			<label>每日用量</label>'
-		+	'				<input type="text" value="'+EatDay+'" class="mui-input-clear" placeholder="" id="EatDay" >
+		+	'				<input type="text" value="'+EatDay+'" class="mui-input-clear" placeholder="" id="EatDay" >'
 		+	'		</div>'
 		
 		+	'			<div class="mui-input-row">'
 		+	'			<label>每次用量</label>'
-		+	'				<input type="text" value="'+EatTimes+'" class="mui-input-clear" placeholder="" id="EatTimes" >
+		+	'				<input type="text" value="'+EatTimes+'" class="mui-input-clear" placeholder="" id="EatTimes" >'
 		+	'		</div>'
 		
 		

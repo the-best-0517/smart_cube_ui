@@ -191,7 +191,7 @@ function createLocalPushMsg(){
 }
 
 			function pullMsg(){
-			  var url = "http://120.79.10.49:8080/smart_cube/login/pull.do";
+			  var url = "http://192.168.137.1:8080/smart_cube/login/pull.do";
 			  $.get(url,function(res){
 			  	if(res.state==1){
 			  		//alert("条用蓝牙")
@@ -203,7 +203,7 @@ function createLocalPushMsg(){
 			function loginSub(){
 				var name = $('#account').val();
 				var pwd = $('#password').val();
-				var url = "http://120.79.10.49:8080/smart_cube/login/login.do";
+				var url = "http://192.168.137.1:8080/smart_cube/login/login.do";
 
 				var loginParams = {
 					name:name,

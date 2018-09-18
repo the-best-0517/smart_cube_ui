@@ -6,10 +6,9 @@
 		<title>find</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
-		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-		
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">	
 		<link rel="stylesheet" href="../css/mui.min.css">
-		<link rel="stylesheet" href="../css/app.css" />
+	
 		<style>
 			html,
 			body {
@@ -87,7 +86,7 @@
 			.mui-card-header.mui-card-media .mui-media-body {
 				    margin-left: 0px;
 			}
-						#scan{
+			#scan{
 				    height: 44px;
 				    width: 44px;
 				    float: right;
@@ -102,7 +101,6 @@
 			<span id="scan" onclick="changeHtml();"><img src="images/scan.png"></span>
 			<h1 class="mui-title" id="" >吃药提醒</h1>				
 		</header> 
-		<input type="text" id="hiddenBox" />
 		<div class="mui-content">
 			<div id="slider" class="mui-slider mui-fullscreen">
 				
@@ -128,8 +126,7 @@
 				<!--长按显示-->
 				<div class="mui-card-footer" id="remaindFooter" style="display: block;">
 					<a class="mui-card-link" id="remindEdit">保存</a>
-					<a class="mui-card-link" id="remindDelete">删除</a>	
-					
+					<a class="mui-card-link" id="remindDelete">删除</a>					
 				</div>
 			</div>
 			<!------------------------------------------------------------>
@@ -140,25 +137,17 @@
 			
 			</div>
 		</div>
-		</div>
-
-
-
+		</div>	
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/mui.pullToRefresh.js"></script>
 		<script src="../js/mui.pullToRefresh.material.js"></script>
 		<script type="text/javascript" src="../js/jquery-2.1.0.js" ></script>
 		<script type="text/javascript" src="../js/json.js" ></script>
-		<script type="text/javascript" src="../js/test.js" ></script>
-		<script type="text/javascript" src="../js/common.js" ></script>
-		<script type="text/javascript" src="../js/test-inner.js" ></script>
-		<script type="text/javascript" src="../js/BLE.js" ></script>
 		<script>
 var phone;
-var ip = getIP();
 $(function(){
 	showRemaind();
-	setbtn();
+//	setTimeout('setbtn()',3000);
 });
 function changeHtml(){
 	localStorage.setItem("phone",phone);
@@ -289,102 +278,44 @@ function addView(result){
 			
 		//轮询	
 		function pullMsg(){
-			  var url = ip+"login/pull.do";
+			  var url = "http://192.168.0.112:8080/smart_cube/login/pull.do";
 			  $.get(url,function(res){
 			  	if(res.state==1){
-			  	//	alert("res"+res.data[1])
-			  		$('#hiddenBox').val(res.data[1]);
-			  		var hiddenBox = $('#hiddenBox').val();
+			  		//alert("条用蓝牙")
+			  		alert(res.data[0]);
 			  		sendMessage(res.data[0]);
-			  	}else{	
-			  		var hiddenBox = $('#hiddenBox').val();
-			  		alert("hb:"+hiddenBox);
-			  		if(hiddenBox){
-			  	//	sendMessage("C00000000000000000");
-			  		var wl = receiveMessage();
-			  		alert(wl);
-			  	//	var wl = "C01110011000";
-			  	if(wl.length<2){
-			  		return;
-			  	}
-			  		var ww = wl[wl.length-1];
-			  		alert("ww:"+ww);
-			  		//N00100000002
-			  		var w = ww.split('');
-			  		alert("w:"+w);
-			  		if(w[1]=="N"){
-			  			var boxSerial = ww.substr(3);
-			  			//保存副盒
-			  			insertboxSerial(boxSerial);
-			  			return;
-			  		}
-			  		var l = parseInt(hiddenBox)+2;
-			  		alert("l:"+l)
-			  //	var l = 6;
-					  alert("w[l]:"+w[l])
-				  		if(w[l]==0){
-				  			alert("666")
-				  			var str = "O"+w[1]+w[2]+"000000000";
-				  			sendMessage(str);
-				  			//更改吃药状态
-				  			//changeIfEating(hiddenBox);
-				  			$('#hiddenBox').val("");
-				  			
-				  		}			  		
-			  		}	  		
+			  		createLocalPushMsg();
 			  	}
 			  });
 			}
-
+		
 		function setbtn(){
+			alert("1");
+			clientEquipment('50:65:83:94:25:CA') //连接蓝牙
+			alert("2");
 			setTimeout('findService()',2000);
 			}
 			function findService(){
-			//alert("1")
-			discoverService();   //发现服务
-			allSearch();
+			alert("3");
+			discoverService();
+					//发现服务
+			alert("4");
+			allSearch();                         	//轮询
 			}
 			function allSearch(){
-			//alert("2")
-				setInterval('pullMsg()',5000);
-			//	setInterval('reviveMsg()',10000);
+			alert("5");
+				setInterval('pullMsg()',6000);
+				setInterval('reviveMsg()',10000);
 			}
-			/*
-			 * 改变吃药状态
-			 */
-			function changeIfEating(boxId){
-				var url = ip+"remiand/changeIfEating.do";
-				var params = {
-					boxId,boxId
-				};
-				$.post(url,params,function(res){
-					if(res.state==1){
-						
-					}
-				});
-			}
-			/*
-			 * 保存副盒信息
-			 */
-			function insertboxSerial(boxSerial){
-				var url = ip+"remiand/insertboxSerial.do";
-				var params = {
-					boxSerial:boxSerial
-				};
-				$.post(url,params,function(res){
-					if(res.state==1){
-						
-					}
-				});
-			}
+			
 			/**
 			 * 切换到后台监听
 			 */
-//		document.addEventListener("pause", function () {
-//  console.log("应用从前台切换到后台");
-// setInterval('pullMsg()',5000);
-//  mui.toast('程序在后台运行');
-//}, false);
+		document.addEventListener("pause", function () {
+    console.log("应用从前台切换到后台");
+    pullMsg();
+    mui.toast('程序在后台运行');
+}, false);
 			
 		</script>
 		<script>

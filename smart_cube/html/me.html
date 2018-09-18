@@ -162,14 +162,15 @@
 		mui.init({
 			swipeBack:true //启用右滑关闭功能
 		});
+		var ip;
 		$(function(){
+			ip=getIP();
 			showPersonMsg();
 		});
 				/**
 			 * 展示个人基本信息
 			 */
 			function showPersonMsg(){
-				ip = getIP();
 				var url = ip+"login/showPersonMsg.do";
 			//	var userId="<%=session.getAttribute('userId')%>"; 
 
@@ -182,8 +183,8 @@
 			}
 			function addPersonOtherMsg(data){
 				$('#userName').text(data[0].userName);
-				$("#head").attr("src","http://120.79.10.49:8080/smart_cube/"+data[0].headImgPath);
-				$("#code").attr("src","http://120.79.10.49:8080/smart_cube/"+data[0].qrCode);
+				$("#head").attr("src",ip+data[0].headImgPath);
+				$("#code").attr("src",ip+data[0].qrCode);
 			}
 		/*跳转页面（待修改）*/
 		function openNewPage(url){
