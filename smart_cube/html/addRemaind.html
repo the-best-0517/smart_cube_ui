@@ -338,14 +338,15 @@ document.getElementById('EatTimes').addEventListener('tap',function() {
 			 					//添加药品信息
 			 					var data = res.data;
 			 					var pillDesc = data[0].pillDesc;
-			 					var EatDay = data[0].EatDay;
-			 					var EatTimes= data[0].EatTimes;
+			 					var instructions = data[0].instructions;	 					
+			 					var EatDay = instructions.split(",")[0];
+			 					var EatTimes= instructions.split(",")[1];
 			 					var whereEating = data[0].whereEating;
 			 					var groom = data[0].groom;
 			 					$('#pillDesc').val(pillDesc);
 			 					$('#EatDay').val(EatDay);
 			 					$('#EatTimes').val(EatTimes);
-			 					$('#howEating').val(howEating);
+			 					$('#howEating').val(whereEating);
 			 					$('#groom').val(groom);
 			 				}
 			 			}

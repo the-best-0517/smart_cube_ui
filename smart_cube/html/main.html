@@ -11,8 +11,6 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="../css/mui.min.css">
-		<!--App自定义的css-->
-		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
 		<style>
 			
 			 
@@ -70,7 +68,7 @@
 				<span class="mui-tab-label">首页</span>
 			</a>
 			<a class="mui-tab-item" href="#tabbar-with-chat" id="pill">
-				<span class="mui-icon mui-icon-email"><span class="mui-badge">100</span></span>
+				<span class="mui-icon mui-icon-email"></span>
 				<span class="mui-tab-label">药品查询</span>
 			</a>
 			
@@ -100,6 +98,7 @@
 				<header class="mui-bar mui-bar-nav">
 			
 			<h1 class="mui-title">药品查询</h1>
+			<!--<span><img src="images/scan.png" style="float: right;"></span>-->
 		</header>
 		<div>
 			<h5>1</h5>
@@ -144,6 +143,7 @@
 	<script src="../js/mui.min.js"></script>
 	<script src="../js/jquery-2.1.0.js"></script>
 	<script type="text/javascript" src="../js/json.js" ></script>
+	<s
 	<script>
 mui.init({
   gestureConfig:{
@@ -161,6 +161,10 @@ mui.init({
 			mui.init();
 			var ip = getIP();
 			mui.plusReady(function () {
+				debugger
+				var page = oneValues();
+				mui.trigger($('.mui-tab-item').eq(page)[0],'touchstart');
+   				 mui.trigger($('.mui-tab-item').eq(page)[0],'tap');
 				//showAllPill();
 				//debugger
 				//alert("555")
@@ -267,6 +271,16 @@ mui.init({
 					}
 				});
 			}
+			
+				    //接收一个值
+		function oneValues(){
+				var result;
+				var url=window.location.search; //获取url中"?"符后的字串  
+				if(url.indexOf("?")!=-1){
+				result = url.substr(url.indexOf("=")+1);
+				}
+				return result;
+		}
 		</script>
 		
 </html>
