@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>       
 <html class="ui-page-login">
 
  <head>
@@ -10,6 +10,9 @@
   <!--标准mui.css-->
   <link rel="stylesheet" href="../css/mui.min.css">
   <script type="text/javascript" src="../js/common.js" ></script>
+
+  <link rel="stylesheet" type="text/css" href="../css/mui.picker.min.css">
+
   <!--App自定义的css-->
   <!-- <link rel="stylesheet" type="text/css" href="../css/app.css" /> -->
   <style>
@@ -31,32 +34,73 @@
    <button type="button" class="mui-btn mui-btn-primary" onclick="saveCaseMsg();" style="float: right;">保存</button>
   </header> 
 
-   <div>
-    <div>
-     <input type="text" id="" />
-     <span>就诊日期</span>
-      <input type="date" id="visitDate"/>
-    </div>
+  <div class="mui-content">
+  <div class="mui-content-padded" style="margin: 5px;">
+
+		<form class="mui-input-group">
+	
+			<div class="mui-input-row">
+				<label>就诊日期</label>
+				<input type="text" class="mui-input-clear" placeholder="" id="visitDate">
+			</div>
+			
+			<div class="mui-input-row" >
+				<label>就诊医院</label>
+				<input type="text" class="mui-input-clear" placeholder="" id="hospital">
+					
+			</div>
+				
+			<div class="mui-input-row" >
+				<label>病因</label>
+				<input type="text" class="mui-input-clear" placeholder="" id="season">
+			</div>
+		</form>
+
+		<button id="add" onclick="window.open('../uploadImg.html')"/>添加图片<image src="images/addImg.png"/></button>
     
-    <div>
-     <span>就诊医院</span>
-     <input type="text" id="hospital" />
-    </div>
-     <div>
-     <span>病因</span>
-     <input type="text" id="season" />
-    </div>
-    <div>
-    <span id="add" onclick="window.open('../uploadImg.html')">添加图片<image src="images/addImg.png"/></span>
-    </div>
     <div id="addImg">  	
     </div> 
-    <div>
-    </div>
-   </div>
+
+	</div>
+
+  </div>
+
+
+    
+   
+   
  <script type="text/javascript" src="../js/mui.js" ></script>
 <script type="text/javascript" src="../js/jquery-2.1.0.js" ></script>
  <script type="text/javascript" src="../js/json.js" ></script>
+ <script src="../js/mui.picker.min.js"></script>
+
+
+	<script>
+		/**
+		 * 日期的选择
+		 */
+
+				 var nowYear=new Date().getFullYear() ; //年
+				 var nowMonth=new Date().getMonth(); //月
+		 		 var nowDay=new Date().getDate();//日	
+
+			  document.querySelector("#visitDate").addEventListener("tap",function(){
+				var dtpicker=new mui.DtPicker({"type":"date",
+				 							   "beginDate": new Date(1949, 09, 01), 
+    										   "endDate": new Date(nowYear, nowMonth, nowDay) }); 
+			    dtpicker.show(function(items){
+			    	$('#visitDate').val(items);
+			    	dtpicker.dispose();
+			    });
+			  });
+		
+		
+	</script>
+
+
+
+
+
  <script>
  	var myArray=new Array();
  	var ip = getIP();

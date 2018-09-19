@@ -1,6 +1,6 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html class="ui-page-login">
-
+      
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
@@ -31,37 +31,66 @@
 			<button type="button" style="float: right;" class="mui-btn mui-btn-primary" onclick="saveInfoCardMsg();">保存</button>&nbsp;&nbsp;
 		</header> 
 
-			<div>
-				<div>
-					<input type="text" id="" />
-					<span>姓名</span>
-				 	<input type="text" id="name"/>
-				</div>
+			
+		<div class="mui-content">
+				<div class="mui-content-padded" style="margin: 5px;">
+	
+					<form class="mui-input-group">
 				
-				<div>
-					<span>性别</span>
-					<input type="text" id="sex" />
+						<div class="mui-input-row">
+							<label>姓名</label>
+							<input type="text" class="mui-input-clear" placeholder="" id="name">
+						</div>
+						
+						<div class="mui-input-row" >
+							<label>性别</label>
+							<input type="text" class="mui-input-clear" placeholder="" id="sex">
+								
+						</div>
+							
+						<div class="mui-input-row" >
+							<label>血型</label>
+							<input type="text" class="mui-input-clear" placeholder="" id="bloodType">
+						</div>
+							
+						<div class="mui-input-row">
+							<label>出生日期</label>
+							<input type="text" class="mui-input-clear" placeholder="" id="birthday">
+						</div>
+						<div class="mui-input-row">
+							<label>过敏药物</label>
+							<input type="text" class="mui-input-clear" placeholder="" id="allergyBill">
+						</div>
+						
+						<div class="mui-input-row">
+							<label>既往病史</label>
+							<input type="text" class="mui-input-clear" placeholder="" id="passIlls">
+						</div>
+						
+						<div class="mui-input-row">
+							<label>紧急联系人</label>
+							<input type="text" class="mui-input-clear" placeholder="" id="emergencyNum">
+						</div>
+					</form>
+	
 				</div>
-					<div>
-					<span>血型</span>
-					<input type="text" id="bloodType" />
-				</div>
-				<div>
-					<span>出生日期</span>
-					<input type="text"  id="birthday" value=""/>
-				</div>
-				
-				<span>过敏药物</span>
-				<input type="text" id="allergyBill" />
-				
-				<span>既往病史</span>
-				<input type="text" id="passIlls" />
-				<span>紧急联系人</span>
-				<input type="text" id="emergencyNum" />
-				
-				<div>
-				</div>
-			</div>
+
+		</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	<script type="text/javascript" src="../js/jquery-2.1.0.js" ></script>
 	<script type="text/javascript" src="../js/mui.min.js" ></script>
@@ -149,9 +178,13 @@
 		/**
 		 * 出生日期的选择
 		 */
-		
+		 var nowYear=new Date().getFullYear() ; //年
+		 var nowMonth=new Date().getMonth(); //月
+		 var nowDay=new Date().getDate();//日	
 			  document.querySelector("#birthday").addEventListener("tap",function(){
-			  	var dtpicker=new mui.DtPicker({"type":"date"}); 
+			  	var dtpicker=new mui.DtPicker({"type":"date",
+				 							   "beginDate": new Date(1949, 09, 01), 
+    										   "endDate": new Date(nowYear, nowMonth, nowDay) }); 
 			    dtpicker.show(function(items){
 			    	$('#birthday').val(items);
 			    	dtpicker.dispose();
@@ -160,6 +193,12 @@
 		
 		
 	</script>
+<<<<<<< HEAD
+	
+
+
+=======
+>>>>>>> 201c9ad5a615a6b5cda191122b9fbfa713e4d286
 	<script>
 		var ip;
 		$(function(){
@@ -176,11 +215,8 @@
 					//回填
 					console.log(res.data)
 				$('#name').val(res.data[0].name);
-				if(res.data[0].sex){
-					$('#sex').val("男");
-				}else{
-					$('#sex').val("女");
-				}				
+			
+				$('#sex').val(res.data[0].sex);
 			 	$('#bloodType').val(res.data[0].bloodType);
 				$('#birthday').val(res.data[0].birthday);
 				$('#allergyBill').val(res.data[0].allergyBill);
